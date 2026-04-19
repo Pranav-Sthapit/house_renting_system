@@ -1,0 +1,104 @@
+<div class="rentalWithPropertyDetails-details">
+
+  <h2>Rental With Property Details</h2>
+
+  <div class="rentalWithPropertyDetails-card" *ngIf="rentalWithPropertyDetails">
+
+    <!-- Thumbnail -->
+    <div class="thumbnail-section">
+      <img [src]=" url + rentalWithPropertyDetails.thumbnail" alt="rentalWithPropertyDetails Image">
+    </div>
+
+    <!-- Details Grid -->
+    <div class="details-grid">
+
+      <div class="detail">
+        <span class="label">BHK</span>
+        <span class="value">{{rentalWithPropertyDetails.BHK}} BHK</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Size</span>
+        <span class="value">{{rentalWithPropertyDetails.size}} sq ft</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Floor</span>
+        <span class="value">{{rentalWithPropertyDetails.floor}}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Area Type</span>
+        <span class="value">{{rentalWithPropertyDetails.areaType}}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Furnishing</span>
+        <span class="value">{{rentalWithPropertyDetails.furnishingStatus}}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Bathrooms</span>
+        <span class="value">{{rentalWithPropertyDetails.bathroom}}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Preferred Tenant</span>
+        <span class="value">{{rentalWithPropertyDetails.tenant}}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Proposed Tenant</span>
+        <span class="value">{{rentalWithPropertyDetails.proposedTenant}}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Rent</span>
+        <span class="value">Rs {{rentalWithPropertyDetails.rent}}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Proposed Rent</span>
+        <span class="value">Rs {{rentalWithPropertyDetails.proposedRent}}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Locality</span>
+        <span class="value">{{rentalWithPropertyDetails.locality}}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">City</span>
+        <span class="value">{{rentalWithPropertyDetails.city}}</span>
+      </div>
+
+      <div class="detail status-box">
+        <span class="label">Status</span>
+        <span class="status" [ngClass]="rentalWithPropertyDetails.status">{{rentalWithPropertyDetails.status}}</span>
+      </div>
+
+    </div>
+
+    <!-- Agreement -->
+    <div class="agreement-section">
+      <a [href]="url + rentalWithPropertyDetails.aggrementOfTerms" target="_blank" class="download-btn">
+        Download Agreement
+      </a>
+    </div>
+    <div class="actions">
+
+      <button class="update-btn" (click)="updateRental()" *ngIf="rentalWithPropertyDetails.status === 'pending'">
+        Update
+      </button>
+
+      <button class="delete-btn" (click)="deleteRental()">
+        Delete
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<app-rental-form *ngIf="showRentalForm" [propertyId]="propertyId" type="update" (closeForm)="showRentalForm=false" />

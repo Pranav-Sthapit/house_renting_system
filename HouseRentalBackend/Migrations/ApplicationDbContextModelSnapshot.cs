@@ -33,8 +33,9 @@ namespace HouseRentalBackend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long>("Contact")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()

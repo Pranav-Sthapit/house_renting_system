@@ -1,0 +1,72 @@
+<div class="properties-container">
+
+  <h2>My Rentals</h2>
+
+  <div class="table-wrapper">
+
+    <table class="properties-table">
+
+      <thead>
+        <tr>
+          <th>Thumbnail</th>
+          <th>BHK</th>
+          <th>Size</th>
+          <th>Floor</th>
+          <th>Locality</th>
+          <th>City</th>
+          <th>Status</th>
+          <th>Details</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let property of rentals">
+
+          <td>
+            <img 
+              [src]="url + property.thumbnail"
+              alt="property thumbnail"
+              class="property-img">
+          </td>
+
+          <td>{{ property.BHK }} BHK</td>
+
+          <td>{{ property.size }} sq ft</td>
+
+          <td>{{ property.floor }}</td>
+
+          <td>{{ property.locality }}</td>
+
+          <td>{{ property.city }}</td>
+
+          <td>
+            <span 
+              class="status"
+              [ngClass]="{
+                'available': property.status === 'Available',
+                'rented': property.status === 'Rented',
+                'pending': property.status === 'Pending'
+              }">
+              {{ property.status }}
+            </span>
+          </td>
+
+          <td>
+            <a [routerLink]="['/renter-home/rental-and-property-details', property.propertyId]">View Details</a>
+          </td>
+
+          <td>
+            <button class="delete-btn" (click)="deleteRental(property.propertyId)">Delete</button>
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

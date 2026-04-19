@@ -1,0 +1,158 @@
+/* NAVBAR FIX */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;   /* increase spacing */
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.2s;
+  cursor:pointer;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* HERO CLEAN */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  padding: 80px 0;
+}
+
+.hero-left {
+  max-width: 520px;
+}
+
+.hero-right img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+/* SEARCH CARD IMPROVEMENT */
+
+.search-card {
+  margin-top: 30px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: #f0f2f3;
+}
+
+.tab.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* STATS FIX */
+
+.stats {
+  margin-top: 40px;
+}
+
+/* FOOTER FIX */
+
+.footer-dark {
+  background: #111;
+  color: white;
+  padding: 50px 0;
+}
+
+/* RESPONSIVE FIX */
+
+@media (max-width: 1024px) {
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-right {
+    order: -1;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .nav-links {
+    display: none;
+  }
+
+}
+
+
+.search-intro h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.search-intro p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.search-highlights {
+  margin-top: 10px;
+}
+
+.highlight-box {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  box-shadow: var(--shadow-soft);
+  transition: 0.2s;
+}
+
+.highlight-box:hover {
+  transform: translateY(-3px);
+}
+
+.highlight-box h4 {
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: var(--text-dark);
+}
+
+.highlight-box p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}

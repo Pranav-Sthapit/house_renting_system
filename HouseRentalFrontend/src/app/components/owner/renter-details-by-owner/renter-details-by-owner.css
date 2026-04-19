@@ -1,0 +1,197 @@
+/* =========================
+   RENTER DETAILS - REVIEW DASHBOARD UI
+========================= */
+
+.renter-details-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.renter-details-container h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 1.75rem;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+/* Grid system upgrade */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card upgrade */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  transition: 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+}
+
+/* Section titles */
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.15rem;
+  color: var(--text-dark);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+
+/* Text hierarchy */
+.card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.card p b {
+  color: var(--text-dark);
+  font-weight: 600;
+  display: inline-block;
+  min-width: 90px;
+}
+
+/* Status badge system */
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+/* Status states */
+.status.approved {
+  background: rgba(107, 143, 122, 0.15); /* Soft primary */
+  color: var(--primary-dark);
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.rejected {
+  background: #fdecea;
+  color: #e53935;
+}
+
+/* Document section */
+.doc {
+  margin-top: 16px;
+}
+
+.doc p {
+  margin-bottom: 8px;
+}
+
+.doc img {
+  width: 100%;
+  max-width: 200px;
+  border-radius: var(--radius-input);
+  margin-top: 6px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border);
+}
+
+/* Document links */
+.doc a {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: #f0f2f3;
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-radius: var(--radius-input);
+  transition: 0.2s;
+  border: 1px solid var(--border);
+}
+
+.doc a:hover {
+  background: #e2e4e6;
+}
+
+/* Actions bar */
+.actions {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+/* Approve button (matches Primary) */
+.approve-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-btn);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.approve-btn:hover:not([disabled]) {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(107, 143, 122, 0.3);
+}
+
+.approve-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Reject button (danger system aligned) */
+.reject-btn {
+  background: #ffffff;
+  color: #e53935;
+  border: 1px solid #e53935;
+  padding: 11px 23px; /* account for border */
+  border-radius: var(--radius-btn);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.reject-btn:hover:not([disabled]) {
+  background: #e53935;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.2);
+}
+
+.reject-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #fca5a5;
+  color: #fca5a5;
+}

@@ -1,0 +1,177 @@
+<div class="profile-container" *ngIf="ownerProfile">
+
+  <h2>Owner Profile</h2>
+
+  <form [formGroup]="profileUpdateForm" novalidate>
+
+    <div class="form-grid">
+
+      <!-- FIRST NAME -->
+      <label>
+        First Name
+        <input type="text" formControlName="firstName">
+
+        <p class="error"
+           *ngIf="profileUpdateForm.get('firstName')?.touched && profileUpdateForm.get('firstName')?.invalid">
+
+          <span *ngIf="profileUpdateForm.get('firstName')?.errors?.['required']">
+            First name is required
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('firstName')?.errors?.['pattern']">
+            Only letters allowed
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('firstName')?.errors?.['minlength']">
+            Minimum 3 characters required
+          </span>
+        </p>
+      </label>
+
+      <!-- LAST NAME -->
+      <label>
+        Last Name
+        <input type="text" formControlName="lastName">
+
+        <p class="error"
+           *ngIf="profileUpdateForm.get('lastName')?.touched && profileUpdateForm.get('lastName')?.invalid">
+
+          <span *ngIf="profileUpdateForm.get('lastName')?.errors?.['required']">
+            Last name is required
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('lastName')?.errors?.['pattern']">
+            Only letters allowed
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('lastName')?.errors?.['minlength']">
+            Minimum 3 characters required
+          </span>
+        </p>
+      </label>
+
+      <!-- EMAIL -->
+      <label>
+        Email
+        <input type="email" formControlName="email">
+
+        <p class="error"
+           *ngIf="profileUpdateForm.get('email')?.touched && profileUpdateForm.get('email')?.invalid">
+
+          <span *ngIf="profileUpdateForm.get('email')?.errors?.['required']">
+            Email is required
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('email')?.errors?.['email']">
+            Enter a valid email
+          </span>
+        </p>
+      </label>
+
+      <!-- ADDRESS -->
+      <label>
+        Address
+        <input type="text" formControlName="address">
+
+        <p class="error"
+           *ngIf="profileUpdateForm.get('address')?.touched && profileUpdateForm.get('address')?.invalid">
+
+          Address is required
+        </p>
+      </label>
+
+      <!-- CONTACT -->
+      <label>
+        Contact
+        <input type="number" formControlName="contact">
+
+        <p class="error"
+           *ngIf="profileUpdateForm.get('contact')?.touched && profileUpdateForm.get('contact')?.invalid">
+
+          <span *ngIf="profileUpdateForm.get('contact')?.errors?.['required']">
+            Contact is required
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('contact')?.errors?.['pattern']">
+            Must be a valid 10-digit Nepali number
+          </span>
+        </p>
+      </label>
+
+      <!-- USERNAME -->
+      <label>
+        Username
+        <input type="text" formControlName="username">
+
+        <p class="error"
+           *ngIf="profileUpdateForm.get('username')?.touched && profileUpdateForm.get('username')?.invalid">
+
+          <span *ngIf="profileUpdateForm.get('username')?.errors?.['required']">
+            Username is required
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('username')?.errors?.['pattern']">
+            Only letters and numbers allowed
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('username')?.errors?.['minlength']">
+            Minimum 3 characters
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('username')?.errors?.['maxlength']">
+            Maximum 20 characters
+          </span>
+        </p>
+      </label>
+
+      <!-- PASSWORD -->
+      <label>
+        Password
+        <input type="password" formControlName="password">
+
+        <p class="error"
+           *ngIf="profileUpdateForm.get('password')?.touched && profileUpdateForm.get('password')?.invalid">
+
+          <span *ngIf="profileUpdateForm.get('password')?.errors?.['required']">
+            Password is required
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('password')?.errors?.['minlength']">
+            Minimum 6 characters
+          </span>
+
+          <span *ngIf="profileUpdateForm.get('password')?.errors?.['maxlength']">
+            Maximum 20 characters
+          </span>
+        </p>
+      </label>
+
+    </div>
+
+    <hr>
+
+    <!-- PROFILE PHOTO -->
+    <div class="photo-section">
+
+      <h3>Profile Photo</h3>
+
+      <img
+        *ngIf="ownerProfile.profilePhoto"
+        [src]="url + ownerProfile.profilePhoto"
+        class="profile-img"
+      />
+
+      <input type="file" (change)="onProfilePhotoChange($event)">
+
+    </div>
+
+    <hr>
+
+    <!-- SUBMIT -->
+    <button type="button" (click)="updateProfile()">
+      Save Changes
+    </button>
+
+  </form>
+
+</div>

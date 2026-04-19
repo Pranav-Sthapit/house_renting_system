@@ -1,0 +1,35 @@
+<div class="page-header">
+  <h2>Your Properties</h2>
+</div>
+
+<div class="property-grid">
+  <div class="property-card" *ngFor="let p of properties">
+
+    <div class="card-image">
+      <img [src]="photoURL + p.thumbnail || 'assets/favicon.io'" alt="property" />
+    </div>
+
+    <div class="card-header">
+      <h3>{{ p.locality }}, {{ p.city }}</h3>
+      <span class="rent">₹ {{ p.rent }}</span>
+    </div>
+
+    <div class="card-body">
+      <p><strong>BHK:</strong> {{ p.bhk }}</p>
+      <p><strong>Furnishing:</strong> {{ p.furnishingStatus }}</p>
+    </div>
+
+    <div class="card-actions">
+      <button class="btn" [routerLink]="['/owner-home/owner-property-detail', p.id]">
+        View Details
+      </button>
+      <button class="btn secondary" [routerLink]="['/owner-home/view-renters', p.id]">View Renters</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Floating Add Button -->
+<button class="fab" routerLink="/owner-home/add-property">
+  +
+</button>

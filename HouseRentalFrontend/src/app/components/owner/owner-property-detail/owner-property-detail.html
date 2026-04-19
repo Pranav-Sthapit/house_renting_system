@@ -1,0 +1,185 @@
+<form [formGroup]="updatePropertyForm">
+    
+<div class="form-grid">
+
+<label>
+BHK
+<input type="number" formControlName="bhk" placeholder="Enter BHK">
+
+<p class="error" *ngIf="updatePropertyForm.get('bhk')?.touched && updatePropertyForm.get('bhk')?.invalid">
+<span *ngIf="updatePropertyForm.get('bhk')?.errors?.['required']">BHK is required</span>
+<span *ngIf="updatePropertyForm.get('bhk')?.errors?.['pattern']">Enter valid BHK (1 or more)</span>
+</p>
+
+</label>
+
+<label>
+Rent
+<input type="number" formControlName="rent" placeholder="Enter Rent">
+
+<p class="error" *ngIf="updatePropertyForm.get('rent')?.touched && updatePropertyForm.get('rent')?.invalid">
+<span *ngIf="updatePropertyForm.get('rent')?.errors?.['required']">Rent is required</span>
+<span *ngIf="updatePropertyForm.get('rent')?.errors?.['pattern']">Enter valid rent amount</span>
+</p>
+
+</label>
+
+<label>
+Size (sq ft)
+<input type="number" formControlName="size" placeholder="Enter Size">
+
+<p class="error" *ngIf="updatePropertyForm.get('size')?.touched && updatePropertyForm.get('size')?.invalid">
+<span *ngIf="updatePropertyForm.get('size')?.errors?.['required']">Size is required</span>
+<span *ngIf="updatePropertyForm.get('size')?.errors?.['pattern']">Enter valid size</span>
+</p>
+
+</label>
+
+<label>
+Floor
+<input type="text" formControlName="floor" placeholder="Example: 2 of 5">
+
+<p class="error" *ngIf="updatePropertyForm.get('floor')?.touched && updatePropertyForm.get('floor')?.invalid">
+Floor is required
+</p>
+
+</label>
+
+<label>
+Area Type
+<select formControlName="areaType">
+
+<option value="">Select Area Type</option>
+<option value="Carpet Area">Carpet Area</option>
+<option value="Built-up Area">Built-up Area</option>
+<option value="Super Built-up Area">Super Built-up Area</option>
+
+</select>
+
+<p class="error" *ngIf="updatePropertyForm.get('areaType')?.touched && updatePropertyForm.get('areaType')?.invalid">
+Area type is required
+</p>
+
+</label>
+
+<label>
+Locality
+<input type="text" formControlName="locality" placeholder="Enter Locality">
+
+<p class="error" *ngIf="updatePropertyForm.get('locality')?.touched && updatePropertyForm.get('locality')?.invalid">
+<span *ngIf="updatePropertyForm.get('locality')?.errors?.['required']">Locality is required</span>
+<span *ngIf="updatePropertyForm.get('locality')?.errors?.['pattern']">Only letters allowed</span>
+</p>
+
+</label>
+
+<label>
+City
+<input type="text" formControlName="city" placeholder="Enter City">
+
+<p class="error" *ngIf="updatePropertyForm.get('city')?.touched && updatePropertyForm.get('city')?.invalid">
+<span *ngIf="updatePropertyForm.get('city')?.errors?.['required']">City is required</span>
+<span *ngIf="updatePropertyForm.get('city')?.errors?.['pattern']">Only letters allowed</span>
+</p>
+
+</label>
+
+<label>
+Furnishing Status
+<select formControlName="furnishingStatus">
+
+<option value="">Select Furnishing</option>
+<option value="Unfurnished">Unfurnished</option>
+<option value="Semi Furnished">Semi Furnished</option>
+<option value="Fully Furnished">Fully Furnished</option>
+
+</select>
+
+<p class="error" *ngIf="updatePropertyForm.get('furnishingStatus')?.touched && updatePropertyForm.get('furnishingStatus')?.invalid">
+Furnishing status is required
+</p>
+
+</label>
+
+<label>
+Tenant
+<input type="text" formControlName="tenant" placeholder="Enter Preferred Tenant">
+
+<p class="error" *ngIf="updatePropertyForm.get('tenant')?.touched && updatePropertyForm.get('tenant')?.invalid">
+<span *ngIf="updatePropertyForm.get('tenant')?.errors?.['required']">Tenant is required</span>
+<span *ngIf="updatePropertyForm.get('tenant')?.errors?.['pattern']">Only letters allowed</span>
+</p>
+
+</label>
+
+<label>
+Bathrooms
+<input type="number" formControlName="bathroom" placeholder="Number of bathrooms">
+
+<p class="error" *ngIf="updatePropertyForm.get('bathroom')?.touched && updatePropertyForm.get('bathroom')?.invalid">
+<span *ngIf="updatePropertyForm.get('bathroom')?.errors?.['required']">Bathroom count required</span>
+<span *ngIf="updatePropertyForm.get('bathroom')?.errors?.['pattern']">Enter valid number</span>
+</p>
+
+</label>
+
+</div>
+
+<hr>
+
+<h3>Current Property Thumbnail</h3>
+
+<img 
+  *ngIf="property?.thumbnail" 
+  [src]="property!.thumbnail" 
+  class="thumbnail-preview">
+
+<hr>
+
+<h3>Upload New Property Thumbnail</h3>
+
+<input 
+  type="file" 
+  accept="image/*"
+  (change)="onThumbnailChange($event)">
+
+<p class="error" *ngIf="updatePropertyForm.get('thumbnail')?.touched && updatePropertyForm.get('thumbnail')?.invalid">
+<span *ngIf="updatePropertyForm.get('thumbnail')?.errors?.['invalidFile']">Invalid file format</span>
+</p>
+<hr>
+
+<h3>Agreement of Terms</h3>
+
+<a 
+  *ngIf="property?.aggrementOfTerms"
+  [href]="property!.aggrementOfTerms"
+  download
+  class="download-btn">
+
+Download Agreement
+
+</a>
+
+<hr>
+
+<h3>Upload New Agreement</h3>
+
+<input 
+  type="file"
+  (change)="onAggrementChange($event)">
+<p class="error" *ngIf="updatePropertyForm.get('aggrement')?.touched && updatePropertyForm.get('aggrement')?.invalid">
+<span *ngIf="updatePropertyForm.get('aggrement')?.errors?.['invalidFile']">Invalid file format</span>
+</p>
+<hr>
+
+<div class="actions">
+<button type="submit" class="create-btn" (click)="saveChanges()">
+Save Changes
+</button>
+</div>
+<div class="actions">
+<button type="submit" class="create-btn" (click)="deleteProperty()">
+Delete Property
+</button>
+</div>
+</form>

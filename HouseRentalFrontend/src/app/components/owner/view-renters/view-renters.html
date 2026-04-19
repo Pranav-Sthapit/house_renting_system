@@ -1,0 +1,83 @@
+<div *ngIf="renterList && renterList.length > 0; else noData" class="renter-table-container">
+
+  <table class="renter-table">
+
+    <thead>
+      <tr>
+        <th>Renter ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Contact</th>
+        <th>Proposed Tenant</th>
+        <th>Proposed Rent</th>
+        <th>Status</th>
+        <th>Details</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let renter of renterList">
+
+        <td>{{ renter.renterId }}</td>
+
+        <td>{{ renter.firstName }}</td>
+
+        <td>{{ renter.lastName }}</td>
+
+        <td>{{ renter.contact }}</td>
+
+        <td>{{ renter.proposedTenant }}</td>
+
+        <td>₹ {{ renter.proposedRent }}</td>
+
+        <td>
+          <span class="status" [ngClass]="renter.status">
+            {{ renter.status }}
+          </span>
+        </td>
+
+        <td>
+          <a
+            class="details-link"
+            [routerLink]="['/owner-home/renter-details-by-owner', propertyId, renter.renterId]"
+          >
+            View Details
+          </a>
+        </td>
+
+        <td>
+          <div class="action-buttons">
+
+            <button
+              class="accept-btn"
+              (click)="acceptRenter(renter.renterId, renter)"
+              [disabled]="renter.status == 'approved'"
+            >
+              Accept
+            </button>
+
+            <button
+              class="reject-btn"
+              (click)="rejectRenter(renter.renterId, renter)"
+              [disabled]="renter.status == 'rejected'"
+            >
+              Reject
+            </button>
+
+          </div>
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+<ng-template #noData>
+  <p class="no-data">No renters found.</p>
+</ng-template>

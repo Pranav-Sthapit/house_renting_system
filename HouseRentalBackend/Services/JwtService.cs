@@ -29,7 +29,7 @@ namespace HouseRentalBackend.Services
                 audience: configuration["JwtSettings:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(
-                        Convert.ToDouble(configuration["JwtSettings:ExpiryMinutes"])    
+                        Convert.ToDouble(configuration["JwtSettings:DurationInMinutes"])    
                     ),
                 signingCredentials: creds
             );

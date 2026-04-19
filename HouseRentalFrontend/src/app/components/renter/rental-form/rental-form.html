@@ -1,0 +1,35 @@
+<div class="modal-overlay">
+
+    <div class="rental-form">
+
+        <h2>Rental Application</h2>
+
+        <form>
+
+            <div class="form-group">
+                <label>Rent</label>
+                <input type="number" name="rent" placeholder="Enter Rent" [(ngModel)]="rent">
+            </div>
+
+            <div class="form-group">
+                <label>Tenant Type (married/single/etc) </label>
+                <input type="text" name="tenant" placeholder="Enter Tenant Type" [(ngModel)]="tenant">
+            </div>
+
+            <div class="buttons">
+
+                <button type="submit" class="submit-btn" (click)="apply()">
+                    Submit
+                </button>
+
+                <button type="button" class="cancel-btn" (click)="closeForm.emit()">
+                    Cancel
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

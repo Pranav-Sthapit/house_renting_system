@@ -1,0 +1,263 @@
+<!-- NAVBAR -->
+
+<header class="navbar">
+    <div class="container navbar-inner">
+
+        <img src="logo.png" width="100" />
+
+        <div class="logo">
+            <h3>HouseHunter</h3>
+        </div>
+
+        <nav class="nav-links">
+            <a (click)="scrollTo('home')">Home</a>
+            <a (click)="scrollTo('about')">About</a>
+            <a (click)="scrollTo('discover')">Discover</a>
+            <a (click)="scrollTo('contact')">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a routerLink="/login" class="btn btn-outline">Login</a>
+            <a routerLink="/register" class="btn btn-primary">Sign Up</a>
+        </div>
+
+    </div>
+</header>
+
+
+<!-- HERO -->
+
+<section id="home" class="hero container">
+
+    <div class="hero-left">
+
+        <h1>
+            Find Your
+            <span class="hero-highlight">Perfect Home</span>
+            With Us
+        </h1>
+
+        <p style="margin-top:16px;">
+            Discover thousands of rental homes across cities.
+            Simple, fast and reliable house rental platform.
+        </p>
+
+        <!-- SEARCH CARD (STATIC UI ONLY) -->
+
+        <div class="search-card">
+
+            <!-- VALUE HIGHLIGHT SECTION (NON-INTERACTIVE) -->
+
+            <div class="search-card">
+
+                <div class="search-intro">
+
+                    <h3>Explore Homes Instantly</h3>
+
+                    <p>
+                        Discover verified rental properties across Kathmandu Valley
+                        with transparent pricing and trusted listings.
+                    </p>
+
+                </div>
+
+                <div class="search-highlights grid grid-2">
+
+                    <div class="highlight-box">
+                        <h4>📍 Location Coverage</h4>
+                        <p>Kathmandu, Lalitpur, Bhaktapur & nearby areas</p>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4>🏠 Property Types</h4>
+                        <p>Apartments, Houses, Rooms, Flats, PG</p>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4>💰 Price Transparency</h4>
+                        <p>No hidden charges, direct owner listings</p>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4>⚡ Fast Discovery</h4>
+                        <p>Find homes in minutes, not days</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- STATS -->
+
+        <div class="stats grid grid-3">
+
+            <div>
+                <h2>400+</h2>
+                <p>Happy Customers</p>
+            </div>
+
+            <div>
+                <h2>300K+</h2>
+                <p>Properties Ready</p>
+            </div>
+
+            <div>
+                <h2>10+</h2>
+                <p>Years Experience</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="hero-right">
+        <img src="house1.jpg" alt="House">
+    </div>
+
+</section>
+
+
+<!-- FEATURED PROPERTIES -->
+
+<section id="discover" class="section">
+
+    <div class="container">
+
+        <h2>Featured Properties</h2>
+
+        <p style="margin-top:8px;">
+            Explore some of our latest rental listings.
+        </p>
+
+        <div class="grid grid-3" style="margin-top:40px;">
+
+            <div class="property-card">
+                <img src="house2.jpg" class="property-image">
+                <div class="property-body">
+                    <div class="property-price">Rs. 65000 / month</div>
+                    <div class="property-location">Kathmandu, Nepal</div>
+                    <div class="property-specs">
+                        <span>3 BHK</span>
+                        <span>1200 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <img src="house3.jpg" class="property-image">
+                <div class="property-body">
+                    <div class="property-price">Rs. 95000 / month</div>
+                    <div class="property-location">Lalitpur, Nepal</div>
+                    <div class="property-specs">
+                        <span>2 BHK</span>
+                        <span>900 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <img src="house4.jpg" class="property-image">
+                <div class="property-body">
+                    <div class="property-price">Rs. 150000 / month</div>
+                    <div class="property-location">Pokhara, Nepal</div>
+                    <div class="property-specs">
+                        <span>4 BHK</span>
+                        <span>1500 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+
+<section id="about" class="section">
+
+    <div class="container">
+
+        <h2>How It Works</h2>
+
+        <div class="grid grid-3" style="margin-top:40px;">
+
+            <div class="card">
+                <h3>Search Properties</h3>
+                <p>Browse houses based on location, budget and property type.</p>
+            </div>
+
+            <div class="card">
+                <h3>Connect with Owners</h3>
+                <p>Directly contact property owners and explore rental opportunities.</p>
+            </div>
+
+            <div class="card">
+                <h3>Rent Your Home</h3>
+                <p>Secure and simple rental process with transparent listings.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section id="contact" class="section">
+
+    <div class="container card" style="text-align:center; padding:60px;">
+
+        <h2>Start Your House Search Today</h2>
+
+        <p style="margin-top:10px;">
+            Join our platform to explore rental homes or list your property.
+        </p>
+
+        <div style="margin-top:25px; display:flex; gap:12px; justify-content:center;">
+
+            <a routerLink="/login" class="btn btn-outline">Login</a>
+            <a routerLink="/register" class="btn btn-primary">Create Account</a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer class="footer-dark">
+
+    <div class="container grid grid-3">
+
+        <div>
+            <h3>HouseHunter</h3>
+            <p class="small-text">
+                A modern platform for finding rental homes easily.
+            </p>
+        </div>
+
+        <div>
+            <h3>Quick Links</h3>
+            <p class="small-text">Home</p>
+            <p class="small-text">Discover</p>
+            <p class="small-text">Contact</p>
+        </div>
+
+        <div>
+            <h3>Contact</h3>
+            <p class="small-text">support@househunter.com</p>
+            <p class="small-text">+977 9800000000</p>
+        </div>
+
+    </div>
+
+</footer>

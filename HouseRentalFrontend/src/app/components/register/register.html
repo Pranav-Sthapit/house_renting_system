@@ -1,0 +1,151 @@
+<div class="auth-wrapper">
+  <div class="auth-card register-card">
+
+    <h1 class="auth-card-title">Create Account</h1>
+    <p class="auth-card-subtitle">
+      Join our property rental platform
+    </p>
+
+    <form [formGroup]="registerForm">
+
+      <div class="register-form-grid">
+
+        <!-- First Name -->
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-input"
+            [class.input-error]="form['firstName'].invalid && form['firstName'].touched" formControlName="firstName"
+            placeholder="Enter first name" />
+          <p class="error" *ngIf="form['firstName'].errors?.['required'] && form['firstName'].touched">
+            First name is required
+          </p>
+          <p class="error" *ngIf="form['firstName'].errors?.['minlength'] && form['firstName'].touched">
+            First name is too short
+          </p>
+          <p class="error" *ngIf="form['firstName'].errors?.['pattern'] && form['firstName'].touched">
+            First name must contain only alphabets
+          </p>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-input"
+            [class.input-error]="form['lastName'].invalid && form['lastName'].touched" formControlName="lastName"
+            placeholder="Enter last name" />
+          <p class="error" *ngIf="form['lastName'].errors?.['required'] && form['lastName'].touched">
+            Last name is required
+          </p>
+          <p class="error" *ngIf="form['lastName'].errors?.['minlength'] && form['lastName'].touched">
+            Last name is too short
+          </p>
+          <p class="error" *ngIf="form['lastName'].errors?.['pattern'] && form['lastName'].touched">
+            Last name must contain only alphabets
+          </p>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group full-width">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" [class.input-error]="form['email'].invalid && form['email'].touched"
+            formControlName="email" placeholder="Enter email" />
+          <p class="error" *ngIf="form['email'].errors?.['required'] && form['email'].touched">
+            Email is required
+          </p>
+          <p class="error" *ngIf="form['email'].errors?.['email'] && form['email'].touched">
+            Enter valid email
+          </p>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group full-width">
+          <label class="form-label">Address</label>
+          <input type="text" class="form-input" formControlName="address" placeholder="Enter address" />
+          <p class="error" *ngIf="form['address'].errors?.['required'] && form['address'].touched">
+            Address is required
+          </p>
+        </div>
+
+        <!-- Contact -->
+        <div class="form-group">
+          <label class="form-label">Contact</label>
+          <input type="text" class="form-input" formControlName="contact" placeholder="Enter contact number" />
+          <p class="error" *ngIf="form['contact'].errors?.['required'] && form['contact'].touched">
+            Contact is required
+          </p>
+          <p class="error" *ngIf="form['contact'].errors?.['pattern'] && form['contact'].touched">
+            Enter valid contact number
+          </p>
+        </div>
+
+        <!-- Username -->
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-input" formControlName="username" placeholder="Choose username" />
+          <p class="error" *ngIf="form['username'].errors?.['required'] && form['username'].touched">
+            Username is required
+          </p>
+          <p class="error" *ngIf="form['username'].errors?.['minlength'] && form['username'].touched">
+            Username is too short
+          </p>
+          <p class="error" *ngIf="form['username'].errors?.['pattern'] && form['username'].touched">
+            Username can only have letters and numbers
+          </p>
+          <p class="error" *ngIf="form['username'].errors?.['maxlength'] && form['username'].touched">
+            Username is too long
+          </p>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group full-width">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" formControlName="password" placeholder="Create password" />
+          <p class="error" *ngIf="form['password'].errors?.['required'] && form['password'].touched">
+            Password is required
+          </p>
+          <p class="error" *ngIf="form['password'].errors?.['minlength'] && form['password'].touched">
+            Password is too short
+          </p>
+          <p class="error" *ngIf="form['password'].errors?.['pattern'] && form['password'].touched">
+            Password cannot contain spaces
+          </p>
+          <p class="error" *ngIf="form['password'].errors?.['maxlength'] && form['password'].touched">
+            Password is too long
+          </p>
+        </div>
+
+        <!-- Profile Photo -->
+        <div class="form-group">
+          <label class="form-label">Profile Photo</label>
+          <input type="file" class="form-input" accept="image/*" (change)="onProfilePhotoChange($event)" />
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label class="form-label">Account Type</label>
+          <select class="form-input" formControlName="category">
+            <option value="">Select type</option>
+            <option value="owner">Property Owner</option>
+            <option value="renter">Renter</option>
+          </select>
+          <p class="error" *ngIf="form['category'].invalid && form['category'].touched">
+            Select valid category
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Button -->
+      <button type="button" class="btn btn-primary register-btn" (click)="register()">
+        Create Account
+      </button>
+
+      <p class="login-footer-text">
+        Already have an account?
+        <a routerLink="/login" class="login-link">Login here</a>
+      </p>
+
+    </form>
+
+  </div>
+</div>

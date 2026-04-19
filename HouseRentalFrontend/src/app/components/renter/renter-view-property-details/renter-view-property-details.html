@@ -1,0 +1,95 @@
+<div class="property-details-container">
+
+<h2>Property Details</h2>
+
+<div class="details-grid">
+
+<div class="detail-item">
+<p class="label">BHK</p>
+<p class="value">{{ property?.bhk }}</p>
+</div>
+
+<div class="detail-item">
+<p class="label">Rent</p>
+<p class="value">Rs {{ property?.rent }}</p>
+</div>
+
+<div class="detail-item">
+<p class="label">Size</p>
+<p class="value">{{ property?.size }} sq ft</p>
+</div>
+
+<div class="detail-item">
+<p class="label">Floor</p>
+<p class="value">{{ property?.floor }}</p>
+</div>
+
+<div class="detail-item">
+<p class="label">Area Type</p>
+<p class="value">{{ property?.areaType }}</p>
+</div>
+
+<div class="detail-item">
+<p class="label">Locality</p>
+<p class="value">{{ property?.locality }}</p>
+</div>
+
+<div class="detail-item">
+<p class="label">City</p>
+<p class="value">{{ property?.city }}</p>
+</div>
+
+<div class="detail-item">
+<p class="label">Furnishing Status</p>
+<p class="value">{{ property?.furnishingStatus }}</p>
+</div>
+
+<div class="detail-item">
+<p class="label">Preferred Tenant</p>
+<p class="value">{{ property?.tenant }}</p>
+</div>
+
+<div class="detail-item">
+<p class="label">Bathrooms</p>
+<p class="value">{{ property?.bathroom }}</p>
+</div>
+
+</div>
+
+<hr>
+
+<h3>Property Thumbnail</h3>
+
+<img
+*ngIf="property?.thumbnail"
+[src]="property!.thumbnail"
+class="thumbnail-preview">
+
+<hr>
+
+<h3>Agreement of Terms</h3>
+
+<a
+*ngIf="property?.aggrementOfTerms"
+[href]="property!.aggrementOfTerms"
+download
+class="download-btn">
+
+Download Agreement
+
+</a>
+
+<div class="actions">
+<button class="apply-btn" (click)="applyForProperty()">
+Apply for Property
+</button>
+</div>
+
+</div>
+
+<app-rental-form
+*ngIf="showRentalForm"
+[propertyId]="propertyId"
+[type]="type"
+(closeForm)="showRentalForm=false"
+/>

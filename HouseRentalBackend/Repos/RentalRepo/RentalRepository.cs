@@ -48,7 +48,8 @@ namespace HouseRentalBackend.Repos.RentalRepo
 
         public async Task<RentalResponseDTOForOwnerWithDetails?> GetRentalDetailsForOwner(int propertyId, int renterId)
         {
-            var query = "Select Rr.\"FirstName\",Rr.\"LastName\",Rr.\"Address\",Rr.\"Email\",Rr.\"Contact\",Rr.\"ProfilePhoto\",Ri.\"Passport\",Ri.\"Citizenship\",P.\"Rent\",Rl.\"Rent\" as \"ProposedRent\",P.\"Tenant\",Rl.\"Tenant\" as \"ProposedTenant\",Rl.\"Status\" From ((((\"Person\" Rr Join \"RenterInfos\" Ri On Rr.\"Id\"=Ri.\"RenterId\") Join \"Rentals\" Rl On Rl.\"RenterId\"=Rr.\"Id\") Join \"Properties\" P On P.\"Id\"=Rl.\"PropertyId\" ) )Where Rr.\"Id\"=@RenterId and P.\"Id\"=@PropertyId;";
+            
+            var query = "Select Rr.\"FirstName\",Rr.\"LastName\",Rr.\"Address\",Rr.\"Email\",Rr.\"Contact\",Rr.\"ProfilePhoto\",Ri.\"Passport\",Ri.\"Citizenship\",P.\"Rent\",Rl.\"Rent\" as \"ProposedRent\",P.\"Tenant\",Rl.\"Tenant\" as \"ProposedTenant\",Rl.\"Status\" From ((((\"Person\" Rr LEFT Join \"RenterInfos\" Ri On Rr.\"Id\"=Ri.\"RenterId\") Join \"Rentals\" Rl On Rl.\"RenterId\"=Rr.\"Id\") Join \"Properties\" P On P.\"Id\"=Rl.\"PropertyId\" ) )Where Rr.\"Id\"=@RenterId and P.\"Id\"=@PropertyId;";
             using var connection = context.CreateConnection();
             var rentalDetails = await connection.QueryFirstOrDefaultAsync<RentalResponseDTOForOwnerWithDetails>(query, new { RenterId = renterId, PropertyId = propertyId });
             return rentalDetails;
@@ -117,7 +118,7 @@ namespace HouseRentalBackend.Repos.RentalRepo
             connection.Open();
 
             using var transaction = connection.BeginTransaction();
-
+            Console.WriteLine($"Received request for rental details with propertyId: {propertyId} and renterId: {renterId}");
             try
             {
                 var query1 = "UPDATE \"Rentals\" SET \"Status\" = 'approved' WHERE \"RenterId\" = @RenterId AND \"PropertyId\" = @PropertyId;";
@@ -133,14 +134,9 @@ namespace HouseRentalBackend.Repos.RentalRepo
                 int success1 = await connection.ExecuteAsync(query1, parameters, transaction);
                 int success2 = await connection.ExecuteAsync(query2, parameters, transaction);
 
-                if (success1 > 0 && success2 > 0)
-                {
-                    transaction.Commit();
-                    return await GetRentalDetailsForOwner(propertyId, renterId);
-                }
-
-                transaction.Rollback();
-                return null;
+                transaction.Commit();
+                return await GetRentalDetailsForOwner(propertyId, renterId);
+                
             }
             catch
             {

@@ -1,0 +1,162 @@
+/* =========================
+   RENTER LIST TABLE
+========================= */
+
+.renter-table-container {
+  background: var(--card-bg);
+  padding: 32px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border);
+  overflow-x: auto; /* Ensures table is scrollable on mobile */
+}
+
+/* Table base */
+.renter-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.95rem;
+}
+
+/* Header */
+.renter-table thead {
+  background: #fdfdfd;
+}
+
+.renter-table th {
+  text-align: left;
+  padding: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+  border-bottom: 2px solid var(--border);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+/* Rows */
+.renter-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  vertical-align: middle;
+}
+
+/* Row hover */
+.renter-table tbody tr {
+  transition: 0.2s ease;
+}
+
+.renter-table tbody tr:hover {
+  background: rgba(107, 143, 122, 0.03); /* Soft subtle primary overlay */
+}
+
+/* Status badge */
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  text-align: center;
+  min-width: 80px;
+}
+
+.status.approved {
+  background: rgba(107, 143, 122, 0.15); /* Soft primary */
+  color: var(--primary-dark);
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.rejected {
+  background: #fdecea;
+  color: #e53935;
+}
+
+/* Details link */
+.details-link {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.details-link:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+/* Accept button */
+.accept-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-btn);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.accept-btn:hover:not([disabled]) {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(107, 143, 122, 0.25);
+}
+
+.accept-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Reject button */
+.reject-btn {
+  background: #ffffff;
+  color: #e53935;
+  border: 1px solid #e53935;
+  padding: 7px 15px; /* Offset by 1px due to border */
+  border-radius: var(--radius-btn);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.reject-btn:hover:not([disabled]) {
+  background: #e53935;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(229, 57, 53, 0.2);
+}
+
+.reject-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #fca5a5;
+  color: #fca5a5;
+}
+
+/* No data text */
+.no-data {
+  padding: 32px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  background: var(--card-bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  border: 1px dashed var(--border);
+}

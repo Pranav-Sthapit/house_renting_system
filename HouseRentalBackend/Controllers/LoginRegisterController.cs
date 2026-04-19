@@ -25,7 +25,7 @@ namespace HouseRentalBackend.Controllers
             if (category == "renter")
             {
                 var user = await repository.LoginRenter(dto);
-                if (user == null) return Unauthorized();
+                if (user == null) return NotFound();
                 
                 var token=jwtService.GenerateToken(user.Id,user.Username,"renter");
                 return Ok(new { Token = token });
@@ -33,7 +33,7 @@ namespace HouseRentalBackend.Controllers
             else
             {
                 var user = await repository.LoginOwner(dto);
-                if (user == null) return Unauthorized();
+                if (user == null) return NotFound();
 
                 var token = jwtService.GenerateToken(user.Id, user.Username, "owner");
                 return Ok(new { Token = token });

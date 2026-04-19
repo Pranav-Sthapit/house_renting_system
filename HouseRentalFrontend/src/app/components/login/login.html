@@ -1,0 +1,48 @@
+<div class="auth-wrapper">
+    <div class="auth-card login-card">
+
+        <h1 class="auth-card-title">Login</h1>
+        <p class="auth-card-subtitle">Welcome back to your rental dashboard</p>
+
+        <!-- Username -->
+        <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-input" name="username"
+                placeholder="Enter username" [(ngModel)]="loginDTO.username" />
+            <p class="error" *ngIf="usernameError">{{usernameError}}</p>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" [class.input-error]="passwordError" name="password"
+                placeholder="Enter password" [(ngModel)]="loginDTO.password" />
+            <p class="error" *ngIf="passwordError">{{passwordError}}</p>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+            <label class="form-label">Account Type</label>
+            <select class="form-input" name="category" [(ngModel)]="category">
+                <option value="owner">Property Owner</option>
+                <option value="renter">Renter</option>
+            </select>
+        </div>
+
+        <!-- Main error -->
+        <p class="error" *ngIf="showLoginError">
+            {{loginError}}
+        </p>
+
+        <!-- Button (now system-aligned) -->
+        <button type="button" class="btn btn-primary login-btn" (click)="login()">
+            Sign In
+        </button>
+
+        <p class="login-footer-text">
+            Don't have an account?
+            <a routerLink="/register" class="login-link">Create account</a>
+        </p>
+
+    </div>
+</div>

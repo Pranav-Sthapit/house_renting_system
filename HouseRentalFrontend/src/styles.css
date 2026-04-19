@@ -1,0 +1,393 @@
+/* =========================
+   CSS RESET
+========================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: #f6f7f8;
+  color: #111111;
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+input, select {
+  font-family: inherit;
+}
+
+
+/* =========================
+   CSS VARIABLES
+========================= */
+
+:root {
+
+  --primary: #6b8f7a;
+  --primary-dark: #567565;
+
+  --text-dark: #111111;
+  --text-secondary: #666666;
+
+  --background: #f6f7f8;
+  --card-bg: #ffffff;
+
+  --border: #e5e7eb;
+
+  --radius-card: 12px;
+  --radius-input: 8px;
+  --radius-btn: 20px;
+
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
+
+  --container-width: 1200px;
+}
+
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+p {
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.small-text {
+  font-size: 14px;
+}
+
+
+/* =========================
+   LAYOUT
+========================= */
+
+.container {
+  max-width: var(--container-width);
+  margin: auto;
+  padding: 0 20px;
+}
+
+.section {
+  padding: 80px 0;
+}
+
+
+/* =========================
+   GRID SYSTEM
+========================= */
+
+.grid {
+  display: grid;
+  gap: 24px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2,1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3,1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4,1fr);
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  padding: 20px;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  transition: 0.3s;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn {
+  padding: 12px 22px;
+  border-radius: var(--radius-btn);
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.25s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-secondary {
+  background: #f0f2f3;
+  color: var(--text-dark);
+}
+
+.btn-outline {
+  border: 1px solid var(--border);
+  background: white;
+}
+
+
+/* =========================
+   FORM COMPONENTS
+========================= */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+input,
+select,
+textarea {
+  padding: 12px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--border);
+  font-size: 14px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.error {
+  color: #e53935;
+  font-size: 12px;
+}
+
+
+/* =========================
+   FORM LAYOUT
+========================= */
+
+.form-card {
+  background: white;
+  padding: 40px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  max-width: 600px;
+  margin: auto;
+}
+
+.form-grid {
+  display: grid;
+  gap: 16px;
+}
+
+
+/* =========================
+   PROPERTY CARD
+========================= */
+
+.property-card {
+  background: white;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: 0.3s;
+}
+
+.property-card:hover {
+  transform: translateY(-6px);
+}
+
+.property-image {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.property-body {
+  padding: 18px;
+}
+
+.property-price {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.property-location {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.property-specs {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+
+/* =========================
+   MODAL / POPUP
+========================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 30px;
+  border-radius: var(--radius-card);
+  width: 500px;
+  box-shadow: var(--shadow-soft);
+}
+
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero {
+  padding: 80px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.hero-highlight {
+  color: var(--primary);
+  border-bottom: 3px solid var(--primary);
+}
+
+
+/* =========================
+   SEARCH CARD
+========================= */
+
+.search-card {
+  background: white;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  margin-top: 30px;
+}
+
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 16px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1024px) {
+
+  .grid-4 {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .search-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+html {
+  scroll-behavior: smooth;
+}

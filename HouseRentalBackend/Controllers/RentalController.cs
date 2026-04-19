@@ -67,6 +67,7 @@ namespace HouseRentalBackend.Controllers
         [HttpGet("owner/{propertyId}/{renterId}")]
         public async Task<IActionResult> GetRentalDetailsForOwner(int propertyId, int renterId)
         {
+            
             var rentalDetails = await rentalRepository.GetRentalDetailsForOwner(propertyId, renterId);
             if (rentalDetails == null)
             {

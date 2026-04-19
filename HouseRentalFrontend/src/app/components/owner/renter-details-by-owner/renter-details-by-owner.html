@@ -1,0 +1,66 @@
+<div class="renter-details-container" *ngIf="renterDetails as r">
+
+  <h2>Renter Details</h2>
+
+  <div class="details-grid">
+
+    <div class="card">
+      <h3>Basic Info</h3>
+      <p><b>Name:</b> {{ r.firstName }} {{ r.lastName }}</p>
+      <p><b>Email:</b> {{ r.email }}</p>
+      <p><b>Contact:</b> {{ r.contact }}</p>
+      <p><b>Address:</b> {{ r.address }}</p>
+      <p><b>Status:</b> <span [ngClass]="r.status">{{ r.status }}</span></p>
+    </div>
+
+    <div class="card">
+      <h3>Rental Info</h3>
+      <p><b>Current Tenant Type:</b> {{ r.tenant }}</p>
+      <p><b>Proposed Tenant Type:</b> {{ r.proposedTenant }}</p>
+      <p><b>Current Rent:</b> Rs. {{ r.rent }}</p>
+      <p><b>Proposed Rent:</b> Rs. {{ r.proposedRent }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Documents</h3>
+
+      <div class="doc">
+        <p><b>Profile Photo:</b></p>
+        <img [src]="'http://localhost:5064' + r.profilePhoto" alt="Profile Photo">
+      </div>
+
+      <div class="doc">
+        <p><b>Passport:</b></p>
+        <a *ngIf="r.passport"
+           [href]="'http://localhost:5064' + r.passport"
+           target="_blank">
+          Download Passport
+        </a>
+        <span *ngIf="!r.passport">Not uploaded</span>
+      </div>
+
+      <div class="doc">
+        <p><b>Citizenship:</b></p>
+        <a *ngIf="r.citizenship"
+           [href]="'http://localhost:5064' + r.citizenship"
+           target="_blank">
+          Download Citizenship
+        </a>
+        <span *ngIf="!r.citizenship">Not uploaded</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <button class="approve-btn" (click)="acceptRenter()" [disabled]="renterDetails.status==='approved'">
+      Approve
+    </button>
+
+    <button class="reject-btn" (click)="rejectRenter()" [disabled]="renterDetails.status==='rejected'">
+      Reject
+    </button>
+  </div>
+
+</div>

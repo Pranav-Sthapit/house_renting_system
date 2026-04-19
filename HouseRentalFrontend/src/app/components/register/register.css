@@ -1,0 +1,170 @@
+/* =========================
+   REGISTER PAGE (SAAS UPGRADE)
+========================= */
+
+.auth-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:40px 0px;
+}
+
+.auth-card-title{
+  font-size: 40px;
+  text-align: center;
+  font-family: inherit;
+}
+
+
+
+.register-card {
+  max-width: 720px;
+  width: 100%;
+}
+
+/* =========================
+   FORM GRID
+========================= */
+
+.register-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 12px;
+}
+
+/* Desktop layout */
+@media (min-width: 768px) {
+  .register-form-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 22px;
+  }
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================
+   FORM GROUP IMPROVEMENTS
+========================= */
+
+.register-card .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+/* =========================
+   INPUT FIELD IMPROVEMENTS
+========================= */
+
+.form-input {
+  padding: 11px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+  transition: var(--transition);
+  background: white;
+}
+
+/* Focus effect */
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+}
+
+/* Error state */
+.input-error {
+  border-color: var(--danger);
+}
+
+/* =========================
+   FILE INPUT
+========================= */
+
+input[type="file"].form-input {
+  padding: 9px;
+  background: #f8fafc;
+  border: 1px dashed var(--border);
+  cursor: pointer;
+}
+
+input[type="file"].form-input::file-selector-button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-right: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.8rem;
+}
+
+input[type="file"].form-input::file-selector-button:hover {
+  background: var(--primary-hover);
+}
+
+/* =========================
+   SELECT DROPDOWN
+========================= */
+
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%2364748b' viewBox='0 0 20 20'%3E%3Cpath d='M5 7l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 38px;
+}
+
+/* =========================
+   ERROR TEXT
+========================= */
+
+.error-text {
+  font-size: 0.75rem;
+  color: var(--danger);
+  margin-top: 4px;
+}
+
+/* =========================
+   REGISTER BUTTON
+========================= */
+
+.register-btn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 12px;
+  font-size: 0.95rem;
+}
+
+/* =========================
+   LOGIN FOOTER
+========================= */
+
+.login-footer-text {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.login-link {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}

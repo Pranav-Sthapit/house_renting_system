@@ -1,0 +1,185 @@
+/* =========================
+   PROPERTY DETAILS - SAAS MANAGEMENT UI
+========================= */
+
+form {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  padding: 32px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border);
+}
+
+/* Grid system aligned */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 24px;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Label system */
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Inputs unified system */
+input,
+select {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-input);
+  font-size: 0.95rem;
+  transition: 0.3s ease;
+  background: #fdfdfd;
+  color: var(--text-dark);
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(107, 143, 122, 0.15); /* Soft primary tint */
+  background: #ffffff;
+}
+
+/* Specific styling for file inputs */
+input[type="file"] {
+  padding: 8px;
+  background: var(--background);
+  border: 1px dashed var(--border);
+  cursor: pointer;
+  width: 100%;
+}
+
+input[type="file"]::file-selector-button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-right: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: var(--primary-dark);
+}
+
+/* Section headers */
+h3 {
+  margin: 32px 0 16px;
+  font-size: 1.15rem;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+h3:first-of-type {
+  margin-top: 0;
+}
+
+/* Divider */
+hr {
+  margin: 32px 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* Thumbnail preview upgraded */
+.thumbnail-preview {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+/* Download button styled */
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 12px;
+  padding: 12px 20px;
+  background: #f0f2f3;
+  color: var(--text-dark);
+  text-decoration: none;
+  border-radius: var(--radius-btn);
+  font-weight: 600;
+  transition: 0.25s;
+  border: 1px solid var(--border);
+}
+
+.download-btn:hover {
+  background: #e2e4e6;
+  border-color: #d1d5db;
+}
+
+/* Actions layout */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+/* Primary button (Save changes) */
+.create-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.create-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(107, 143, 122, 0.3);
+}
+
+/* 
+  Since the Delete button in HTML also uses the `create-btn` class, 
+  we use structural pseudo-classes to turn the 2nd button 
+  into a sleek minimal Danger Button, without altering the HTML structure! 
+*/
+form > .actions:last-of-type .create-btn {
+  background: #fff;
+  color: #e53935;
+  border: 1px solid #e53935;
+  box-shadow: none;
+}
+
+form > .actions:last-of-type .create-btn:hover {
+  background: #e53935;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.2);
+}
+
+/* Error text */
+.error {
+  font-size: 0.8rem;
+  color: #e53935;
+  margin-top: 8px;
+  font-weight: 500;
+}

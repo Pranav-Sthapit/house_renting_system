@@ -1,0 +1,39 @@
+/* =========================
+   RENTER DASHBOARD LAYOUT
+========================= */
+
+.renter-container {
+  padding: 40px 20px;
+  min-height: calc(100vh - 64px); /* assuming navbar is around 64px */
+  background: var(--background);
+}
+
+/* Inner content wrapper for consistent alignment */
+.renter-content {
+  max-width: var(--container-width, 1200px);
+  margin: 0 auto;
+}
+
+/* Smooth page entry for all child routes */
+.renter-content > * {
+  animation: fadeIn 0.3s ease-out;
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+  .renter-container {
+    padding: 24px 16px;
+  }
+}

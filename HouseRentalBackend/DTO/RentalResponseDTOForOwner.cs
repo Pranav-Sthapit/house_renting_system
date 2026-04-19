@@ -6,7 +6,7 @@
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
 
-        public int Contact {  get; set; }
+        public required string Contact {  get; set; }
 
         public required string Tenant { get; set; }
 

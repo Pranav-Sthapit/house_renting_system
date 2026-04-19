@@ -70,7 +70,7 @@ namespace HouseRentalBackend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProperty([FromForm] PropertyRequestDTO dto)
         {
-
+            
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(userId))
