@@ -19,7 +19,7 @@ namespace HouseRentalBackend.Controllers
             this.rentalRepository = rentalRepository;
         }
 
-        [Authorize(Roles ="renter")]
+        [Authorize(Roles = "renter")]
         [HttpGet("renter")]
         public async Task<IActionResult> GetRentalsOfRenter()
         {
@@ -48,10 +48,6 @@ namespace HouseRentalBackend.Controllers
                 return BadRequest("Invalid UserId format in token");
 
             var rentalDetails = await rentalRepository.GetRentalDetailsForRenter(renterId, propertyId);
-            if (rentalDetails == null)
-            {
-                return NotFound();
-            }
             return Ok(rentalDetails);
         }
 
@@ -67,18 +63,14 @@ namespace HouseRentalBackend.Controllers
         [HttpGet("owner/{propertyId}/{renterId}")]
         public async Task<IActionResult> GetRentalDetailsForOwner(int propertyId, int renterId)
         {
-            
+
             var rentalDetails = await rentalRepository.GetRentalDetailsForOwner(propertyId, renterId);
-            if (rentalDetails == null)
-            {
-                return NotFound();
-            }
             return Ok(rentalDetails);
         }
 
         [Authorize(Roles = "renter")]
         [HttpPost("renter/{propertyId}")]
-        public async Task<IActionResult> AddRentalByRenter( int propertyId, [FromBody] RentalRequestAndUpdateDTO dto)
+        public async Task<IActionResult> AddRentalByRenter(int propertyId, [FromBody] RentalRequestAndUpdateDTO dto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -88,19 +80,10 @@ namespace HouseRentalBackend.Controllers
             if (!int.TryParse(userId, out int renterId))
                 return BadRequest("Invalid UserId format in token");
 
-            try
-            {
-                var rentalDetails = await rentalRepository.AddRentalByRenter(renterId, propertyId, dto);
-                if (rentalDetails == null)
-                {
-                    return BadRequest();
-                }
-                return Ok(rentalDetails);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            var rentalDetails = await rentalRepository.AddRentalByRenter(renterId, propertyId, dto);
+            return Ok(rentalDetails);
+
         }
 
         [Authorize(Roles = "renter")]
@@ -116,16 +99,13 @@ namespace HouseRentalBackend.Controllers
                 return BadRequest("Invalid UserId format in token");
 
             var rentalDetails = await rentalRepository.UpdateRentalByRenter(renterId, propertyId, dto);
-                if (rentalDetails == null)
-                {
-                    return BadRequest();
-                }
             return Ok(rentalDetails);
+
         }
 
         [Authorize(Roles = "renter")]
         [HttpDelete("renter/{propertyId}")]
-        public async Task<IActionResult> DeleteRentalByRenter( int propertyId)
+        public async Task<IActionResult> DeleteRentalByRenter(int propertyId)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -143,20 +123,9 @@ namespace HouseRentalBackend.Controllers
         [HttpPut("owner/{propertyId}/{renterId}/approve")]
         public async Task<IActionResult> ApproveRentalByOwner(int propertyId, int renterId)
         {
-            try
-            {
-                var rentalDetails = await rentalRepository.ApproveRentalByOwner(propertyId, renterId);
-                if (rentalDetails == null)
-                {
-                    return BadRequest();
-                }
-                return Ok(rentalDetails);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An internal server error occurred :" + ex.Message);
 
-            }
+            var rentalDetails = await rentalRepository.ApproveRentalByOwner(propertyId, renterId);
+            return Ok(rentalDetails);
         }
 
         [Authorize(Roles = "owner")]
@@ -164,10 +133,6 @@ namespace HouseRentalBackend.Controllers
         public async Task<IActionResult> RejectRentalByOwner(int propertyId, int renterId)
         {
             var rentalDetails = await rentalRepository.RejectRentalByOwner(propertyId, renterId);
-            if (rentalDetails == null)
-            {
-                return BadRequest();
-            }
             return Ok(rentalDetails);
         }
     }

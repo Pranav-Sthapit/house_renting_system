@@ -94,7 +94,7 @@ export class OwnerProfile {
       },
       error: (err) => {
         console.log(err);
-        alert("Profile update failed");
+        alert(err.error.message);
       }
     })
   }

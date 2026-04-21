@@ -17,18 +17,6 @@ namespace HouseRentalBackend.Controllers
             this.propertyRepository = propertyRepository;
         }
 
-        [HttpGet("debug")]
-        public IActionResult Debug()
-        {
-
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var role = User.FindFirst(ClaimTypes.Role)?.Value;
-            var username = User.FindFirst(ClaimTypes.Name)?.Value;
-
-            Console.WriteLine($"UserId: {userId}, Role: {role}, USername: {username}");
-            return Ok();
-        }
-
 
 
         [Authorize(Roles = "renter")]
@@ -60,8 +48,6 @@ namespace HouseRentalBackend.Controllers
         public async Task<IActionResult> GetProperty(int propertyId)
         {
             var property = await propertyRepository.GetProperty(propertyId);
-            if (property == null)
-                return NotFound();
             return Ok(property);
         }
 
@@ -70,7 +56,7 @@ namespace HouseRentalBackend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProperty([FromForm] PropertyRequestDTO dto)
         {
-            
+
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(userId))
@@ -79,15 +65,8 @@ namespace HouseRentalBackend.Controllers
             if (!int.TryParse(userId, out int ownerId))
                 return BadRequest("Invalid UserId format in token");
 
-            try
-            {
-                var property = await propertyRepository.AddProperty(ownerId, dto);
-                return Ok(property);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var property = await propertyRepository.AddProperty(ownerId, dto);
+            return Ok(property);
         }
 
         [Authorize(Roles = "owner")]
@@ -102,15 +81,10 @@ namespace HouseRentalBackend.Controllers
             if (!int.TryParse(userId, out int ownerId))
                 return BadRequest("Invalid UserId format in token");
 
-            try
-            {
-                var property = await propertyRepository.UpdateProperty(id, ownerId, dto);
-                return Ok(property);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+
+            var property = await propertyRepository.UpdateProperty(id, ownerId, dto);
+            return Ok(property);
+
         }
 
         [Authorize(Roles = "owner")]
@@ -126,15 +100,10 @@ namespace HouseRentalBackend.Controllers
                 return BadRequest("Invalid UserId format in token");
 
 
-            try
-            {
-                var property = await propertyRepository.DeleteProperty(id, ownerId);
-                return Ok(property);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+
+            var property = await propertyRepository.DeleteProperty(id, ownerId);
+            return Ok(property);
+
         }
     }
 }

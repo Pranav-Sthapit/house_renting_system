@@ -72,9 +72,9 @@ export class Register {
           this.router.navigate(['/renter-home']);
         }
       },
-      error: (error) => {
-        console.error(error);
-        alert("User registration failed , try with different fields of username , email or contact");
+      error: (err) => {
+        console.error(err);
+        alert(err.error.message);
       }
     });
 

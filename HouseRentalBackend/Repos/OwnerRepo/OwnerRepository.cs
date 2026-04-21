@@ -1,5 +1,6 @@
 ﻿using HouseRentalBackend.Data;
 using HouseRentalBackend.DTO;
+using HouseRentalBackend.Exceptions;
 using HouseRentalBackend.Models;
 using HouseRentalBackend.Services;
 using Microsoft.EntityFrameworkCore;
@@ -16,13 +17,40 @@ namespace HouseRentalBackend.Repos.OwnerRepo
             this.fileService = fileService;
         }
 
+        private async Task FindDuplicates(string type, string field, int ownerId)
+        {
+            bool exists = false;
+
+            switch (type)
+            {
+                case "Email":
+                    exists = await context.Renters.AnyAsync(r => r.Email == field)
+                          || await context.Owners.AnyAsync(o => o.Email == field && o.Id != ownerId);
+                    break;
+
+                case "Username":
+                    exists = await context.Renters.AnyAsync(r => r.Username == field)
+                          || await context.Owners.AnyAsync(o => o.Username == field && o.Id != ownerId);
+                    break;
+
+                case "Contact":
+                    exists = await context.Renters.AnyAsync(r => r.Contact == field)
+                          || await context.Owners.AnyAsync(o => o.Contact == field && o.Id != ownerId);
+                    break;
+            }
+
+            if (exists)
+            {
+                throw new DuplicateException(type);
+            }
+        }
         public async Task<OwnerResponseDTO> GetOwnerInfo(int ownerId)
         {
             var owner = await context.Owners.FindAsync(ownerId);
 
             if (owner == null)
             {
-                throw new Exception("Owner not found");
+                throw new NotFoundException("Owner not found");
             }
 
             var ownerResponse = new OwnerResponseDTO
@@ -43,10 +71,15 @@ namespace HouseRentalBackend.Repos.OwnerRepo
 
         public async Task<OwnerResponseDTO> UpdateOwnerInfo(int ownerId, OwnerUpdateDTO dto)
         {
+            await FindDuplicates("Email", dto.Email, ownerId);
+            await FindDuplicates("Username", dto.Username, ownerId);
+            await FindDuplicates("Contact", dto.Contact, ownerId);
+
+
             var owner = await context.Owners.FindAsync(ownerId);
             if (owner == null)
             {
-                throw new Exception("Owner not found");
+                throw new NotFoundException("Owner not found");
             }
             owner.FirstName = dto.FirstName;
             owner.LastName = dto.LastName;

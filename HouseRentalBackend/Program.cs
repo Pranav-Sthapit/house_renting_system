@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using HouseRentalBackend.Repos.RentalRepo;
+using HouseRentalBackend.Controllers;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,7 @@ builder.Services.AddScoped<IRenterRepository, RenterRepository>();
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IRentalRepository, RentalRepository>();
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -64,6 +67,7 @@ builder.Services.AddCors(options =>
 
 
 var app = builder.Build();
+app.UseExceptionHandler(_ => { });
 app.UseCors("AllowAll");
 app.UseStaticFiles();
 

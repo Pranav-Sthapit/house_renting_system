@@ -1,5 +1,6 @@
 ﻿using HouseRentalBackend.Data;
 using HouseRentalBackend.DTO;
+using HouseRentalBackend.Exceptions;
 using HouseRentalBackend.Models;
 using HouseRentalBackend.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -64,11 +65,11 @@ namespace HouseRentalBackend.Repos.PropertyRepo
             return properties;
         }
 
-        public async Task<PropertyResponseDTO?> GetProperty(int propertyId)
+        public async Task<PropertyResponseDTO> GetProperty(int propertyId)
         {
             var property = await context.Properties.FindAsync(propertyId);
             if (property == null)
-                return null;
+                throw new NotFoundException("Property not found");
 
             return new PropertyResponseDTO
             {
@@ -102,7 +103,7 @@ namespace HouseRentalBackend.Repos.PropertyRepo
 
             if (owner == null)
             {
-                throw new Exception("Owner not found.");
+                throw new NotFoundException("Owner not found.");
             }
 
             var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/owner/{ownerId}");
@@ -161,7 +162,7 @@ namespace HouseRentalBackend.Repos.PropertyRepo
 
             if (property == null)
             {
-                throw new Exception("Property not found.");
+                throw new NotFoundException("Property not found.");
             }
 
             if(dto.Thumbnail != null) 
@@ -215,7 +216,7 @@ namespace HouseRentalBackend.Repos.PropertyRepo
             var property = await context.Properties.SingleOrDefaultAsync(p => p.Id == id && p.OwnerId == ownerId);
             if (property == null)
             {
-                throw new Exception("Property not found.");
+                throw new NotFoundException("Property not found.");
             }
 
             fileService.DeleteFile(property.Thumbnail);

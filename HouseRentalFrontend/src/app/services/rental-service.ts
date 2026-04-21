@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RentalService {
 
-  private baseUrl = 'http://localhost:5064/api';
+  private baseUrl = environment.apiUrl + "/api";
 
   constructor(private http: HttpClient) { }
 
@@ -37,7 +38,7 @@ export class RentalService {
     return this.http.put(`${this.baseUrl}/Rental/owner/${propertyId}/${renterId}/reject`, {}, { headers });
   }
 
-  getRenterDetails(propertyId:number,renterId:number){
+  getRenterDetails(propertyId: number, renterId: number) {
     const token = localStorage.getItem('token');
 
     const headers = new HttpHeaders({
@@ -48,7 +49,7 @@ export class RentalService {
 
 
 
-  getRentalsOfRenter(){
+  getRentalsOfRenter() {
     const token = localStorage.getItem('token');
 
     const headers = new HttpHeaders({
@@ -57,7 +58,7 @@ export class RentalService {
     return this.http.get(`${this.baseUrl}/Rental/renter`, { headers });
   }
 
-  getRentalAndPropertyDetails(propertyId:number){
+  getRentalAndPropertyDetails(propertyId: number) {
     const token = localStorage.getItem('token');
 
     const headers = new HttpHeaders({
@@ -66,25 +67,25 @@ export class RentalService {
     return this.http.get(`${this.baseUrl}/Rental/renter/${propertyId}`, { headers });
   }
 
-  addRental(propertyId:number,tenant:string,rent:number){
+  addRental(propertyId: number, tenant: string, rent: number) {
     const token = localStorage.getItem('token');
 
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
-    return this.http.post(`${this.baseUrl}/Rental/renter/${propertyId}`, {tenant,rent}, { headers });
+    return this.http.post(`${this.baseUrl}/Rental/renter/${propertyId}`, { tenant, rent }, { headers });
   }
 
-  updateRental(propertyId:number,tenant:string,rent:number){
+  updateRental(propertyId: number, tenant: string, rent: number) {
     const token = localStorage.getItem('token');
 
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
-    return this.http.put(`${this.baseUrl}/Rental/renter/${propertyId}`, {tenant,rent}, { headers });
+    return this.http.put(`${this.baseUrl}/Rental/renter/${propertyId}`, { tenant, rent }, { headers });
   }
 
-  deleteRental(propertyId:number){
+  deleteRental(propertyId: number) {
     const token = localStorage.getItem('token');
 
     const headers = new HttpHeaders({

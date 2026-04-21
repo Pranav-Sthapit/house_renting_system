@@ -47,9 +47,9 @@ export class Login {
             this.router.navigate(['/renter-home']);
           }
         },
-        error: (error) => {
-          console.error(error);
-          alert("Invalid email or password");
+        error: (err) => {
+          console.error(err);
+          alert(err.error.message);
         }
       });
     }

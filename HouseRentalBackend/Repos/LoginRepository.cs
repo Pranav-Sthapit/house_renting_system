@@ -1,7 +1,9 @@
 ﻿using HouseRentalBackend.Data;
 using HouseRentalBackend.DTO;
+using HouseRentalBackend.Exceptions;
 using HouseRentalBackend.Models;
 using Microsoft.EntityFrameworkCore;
+using HouseRentalBackend.Exceptions;
 
 namespace HouseRentalBackend.Repos
 {
@@ -11,18 +13,63 @@ namespace HouseRentalBackend.Repos
 
         public LoginRepository(ApplicationDbContext context) => this.context = context;
 
-        public async Task<Renter?> LoginRenter(LoginDTO dto)
+
+        private async Task FindDuplicates(string type, string field)
         {
-              return await context.Renters.SingleOrDefaultAsync<Renter>(r => r.Username==dto.Username && r.Password==dto.Password );
+            bool exists = false;
+
+            switch (type)
+            {
+                case "Email":
+                    exists = await context.Renters.AnyAsync(r => r.Email == field)
+                          || await context.Owners.AnyAsync(o => o.Email == field);
+                    break;
+
+                case "Username":
+                    exists = await context.Renters.AnyAsync(r => r.Username == field)
+                          || await context.Owners.AnyAsync(o => o.Username == field);
+                    break;
+
+                case "Contact":
+                    exists = await context.Renters.AnyAsync(r => r.Contact == field)
+                          || await context.Owners.AnyAsync(o => o.Contact == field);
+                    break;
+            }
+
+            if (exists)
+            {
+                throw new DuplicateException(type);
+            }
         }
 
-        public async Task<Owner?> LoginOwner(LoginDTO dto)
+
+        public async Task<Renter> LoginRenter(LoginDTO dto)
         {
-            return await context.Owners.SingleOrDefaultAsync<Owner>(o => o.Username == dto.Username && o.Password == dto.Password);
+            var renter = await context.Renters.SingleOrDefaultAsync<Renter>(r => r.Username == dto.Username && r.Password == dto.Password);
+
+            if (renter == null)
+                throw new NotFoundException("Invalid username or password");
+
+            return renter;
+        }
+
+        public async Task<Owner> LoginOwner(LoginDTO dto)
+        {
+            var owner = await context.Owners.SingleOrDefaultAsync<Owner>(o => o.Username == dto.Username && o.Password == dto.Password);
+            
+            if (owner == null)
+                throw new NotFoundException("Invalid username or password");
+            
+            return owner;
         }
 
         public async Task<Renter> RegisterRenter(RegisterDTO dto)
         {
+            // Check Duplicates
+            await FindDuplicates("Email", dto.Email);
+            await FindDuplicates("Username", dto.Username);
+            await FindDuplicates("Contact", dto.Contact);
+
 
             Renter renter = new Renter
             {
@@ -39,18 +86,18 @@ namespace HouseRentalBackend.Repos
             await context.SaveChangesAsync();
 
 
-            var file=dto.ProfilePhoto;
+            var file = dto.ProfilePhoto;
             if (file != null)
             {
                 var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/renters/{renter.Id}");
-                if(!Directory.Exists(uploadPath))
+                if (!Directory.Exists(uploadPath))
                 {
                     Directory.CreateDirectory(uploadPath);
                 }
                 var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
                 var filePath = Path.Combine(uploadPath, fileName);
 
-                using(var stream = new FileStream(filePath, FileMode.Create))
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
@@ -65,6 +112,12 @@ namespace HouseRentalBackend.Repos
 
         public async Task<Owner> RegisterOwner(RegisterDTO dto)
         {
+            // Check Duplicates
+            await FindDuplicates("Email", dto.Email);
+            await FindDuplicates("Username", dto.Username);
+            await FindDuplicates("Contact", dto.Contact);
+
+
             Owner owner = new Owner
             {
                 FirstName = dto.FirstName,

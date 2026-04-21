@@ -29,15 +29,8 @@ namespace HouseRentalBackend.Controllers
             if (!int.TryParse(userId, out int renterId))
                 return BadRequest("Invalid UserId format in token");
 
-            try
-            {
-                var renterInfo = await renterRepository.GetRenterInfo(renterId);
-                return Ok(renterInfo);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var renterInfo = await renterRepository.GetRenterInfo(renterId);
+            return Ok(renterInfo);
         }
 
         [Authorize(Roles = "renter")]
@@ -50,15 +43,9 @@ namespace HouseRentalBackend.Controllers
             if (!int.TryParse(userId, out int renterId))
                 return BadRequest("Invalid UserId format in token");
 
-            try
-            {
-                var updatedRenterInfo = await renterRepository.UpdateRenterInfo(renterId, dto);
-                return Ok(updatedRenterInfo);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+
+            var updatedRenterInfo = await renterRepository.UpdateRenterInfo(renterId, dto);
+            return Ok(updatedRenterInfo);
 
         }
     }

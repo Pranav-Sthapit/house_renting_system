@@ -8,7 +8,7 @@ namespace HouseRentalBackend.Repos.PropertyRepo
         Task<List<PropertyResponseDTO>> GetAllProperties();
         Task<List<PropertyResponseDTO>> GetOwnerProperties(int ownerId);
 
-        Task<PropertyResponseDTO?> GetProperty(int propertyId);
+        Task<PropertyResponseDTO> GetProperty(int propertyId);
         Task<PropertyResponseDTO> AddProperty(int ownerId,PropertyRequestDTO dto);
 
         Task<PropertyResponseDTO> UpdateProperty(int id,int ownerId,PropertyUpdateDTO dto);
