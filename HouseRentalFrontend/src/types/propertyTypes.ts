@@ -14,6 +14,7 @@ export type PropertyDTO = {
 export type PropertyRequestDTO = PropertyDTO & {
     thumbnail: File;
     aggrementOfTerms: File;
+    pictures?: File[];
 }
 
 export type PropertyResponseDTO = PropertyDTO & {
@@ -21,9 +22,11 @@ export type PropertyResponseDTO = PropertyDTO & {
     thumbnail: string;
     aggrementOfTerms: string;
     ownerId: number;
+    pictures?: string[];
 }
 
 export type PropertyUpdateDTO = PropertyDTO & {
     thumbnail?: File;
     aggrementOfTerms?: File;
+    pictures?: File[];
 }

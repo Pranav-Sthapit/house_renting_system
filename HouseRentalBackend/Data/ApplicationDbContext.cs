@@ -15,6 +15,8 @@ namespace HouseRentalBackend.Data
         public DbSet<Property> Properties { get; set; }
         public DbSet<Rental> Rentals { get; set; }
 
+        public DbSet<PropertyPicture> PropertyPictureList { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>().HasIndex(p => p.Email).IsUnique();
@@ -24,6 +26,7 @@ namespace HouseRentalBackend.Data
 
             modelBuilder.Entity<Renter>().HasOne(r => r.RenterInfo).WithOne(ri => ri.Renter).HasForeignKey<RenterInfo>(ri => ri.RenterId);
             modelBuilder.Entity<Owner>().HasMany(o => o.Properties).WithOne(p => p.Owner).HasForeignKey(p => p.OwnerId);
+            modelBuilder.Entity<Property>().HasMany(p=>p.PropertyPictures).WithOne(pp=>pp.Property).HasForeignKey(pp=>pp.PropertyId);
 
             modelBuilder.Entity<Rental>().HasOne(rl => rl.Renter).WithMany(r => r.Rentals).HasForeignKey(rl=>rl.RenterId);
             modelBuilder.Entity<Rental>().HasOne(rl => rl.Property).WithMany(p => p.Rentals).HasForeignKey(rl => rl.PropertyId);

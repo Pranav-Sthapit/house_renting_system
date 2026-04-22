@@ -18,6 +18,7 @@ export type RentalResponseForRenterWithDetailsDTO=RentalResponseForRenterDTO & {
     proposedRent:number;
     bathroom:number;
     aggrementOfTerms:string;
+    pictures?:string[];
 }
 
 export type RentalRequestAndUpdateDTO={

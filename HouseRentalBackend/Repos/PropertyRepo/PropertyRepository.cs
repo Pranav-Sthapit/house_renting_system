@@ -21,7 +21,7 @@ namespace HouseRentalBackend.Repos.PropertyRepo
 
         public async Task<List<PropertyResponseDTO>> GetAllProperties()
         {
-            var properties = await context.Properties.Select(p=>new PropertyResponseDTO
+            var properties = await context.Properties.Select(p => new PropertyResponseDTO
             {
                 Id = p.Id,
                 BHK = p.BHK,
@@ -44,7 +44,7 @@ namespace HouseRentalBackend.Repos.PropertyRepo
 
         public async Task<List<PropertyResponseDTO>> GetOwnerProperties(int ownerId)
         {
-            var properties = await context.Properties.Where(p=>p.OwnerId==ownerId).Select(p=>new PropertyResponseDTO
+            var properties = await context.Properties.Where(p => p.OwnerId == ownerId).Select(p => new PropertyResponseDTO
             {
                 Id = p.Id,
                 BHK = p.BHK,
@@ -67,7 +67,7 @@ namespace HouseRentalBackend.Repos.PropertyRepo
 
         public async Task<PropertyResponseDTO> GetProperty(int propertyId)
         {
-            var property = await context.Properties.FindAsync(propertyId);
+            var property = await context.Properties.Include(p => p.PropertyPictures).FirstOrDefaultAsync(p => p.Id == propertyId);
             if (property == null)
                 throw new NotFoundException("Property not found");
 
@@ -86,8 +86,10 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Bathroom = property.Bathroom,
                 Thumbnail = property.Thumbnail,
                 AggrementOfTerms = property.AggrementOfTerms,
-                OwnerId = property.OwnerId
+                OwnerId = property.OwnerId,
+                Pictures = property.PropertyPictures?.Select(pp => pp.FilePath).ToList()
             };
+
         }
         public async Task<PropertyResponseDTO> AddProperty(int ownerId, PropertyRequestDTO dto)
         {
@@ -107,7 +109,7 @@ namespace HouseRentalBackend.Repos.PropertyRepo
             }
 
             var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/owner/{ownerId}");
-            
+            Directory.CreateDirectory(uploadPath);
             string thumbnailName = await fileService.SaveFileAsync(thumbnailFile, uploadPath);
             string thumbnailPath = $"/uploads/owner/{ownerId}/{thumbnailName}";
             string aggrementName = await fileService.SaveFileAsync(aggrementFile, uploadPath);
@@ -135,6 +137,27 @@ namespace HouseRentalBackend.Repos.PropertyRepo
             context.Properties.Add(property);
             await context.SaveChangesAsync();
 
+            var pictures = dto.Pictures;
+            if (pictures != null && pictures.Count > 0)
+            {
+                string picUploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/property/{property.Id}");
+                Directory.CreateDirectory(picUploadPath);
+                if (property.PropertyPictures == null)
+                {
+                    property.PropertyPictures = new List<PropertyPicture>();
+                }
+                foreach (var picture in pictures)
+                {
+                    string pictureName = await fileService.SaveFileAsync(picture, picUploadPath);
+                    string picturePath = $"/uploads/property/{property.Id}/{pictureName}";
+                    property.PropertyPictures.Add(new PropertyPicture
+                    {
+                        FilePath = picturePath
+                    });
+                }
+            }
+            await context.SaveChangesAsync();
+
             PropertyResponseDTO response = new PropertyResponseDTO
             {
                 Id = property.Id,
@@ -150,32 +173,65 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Bathroom = property.Bathroom,
                 Thumbnail = property.Thumbnail,
                 AggrementOfTerms = property.AggrementOfTerms,
-                OwnerId = property.OwnerId
+                OwnerId = property.OwnerId,
+                Pictures = property.PropertyPictures?.Select(pp => pp.FilePath).ToList()
             };
 
             return response;
         }
-        
-        public async Task<PropertyResponseDTO> UpdateProperty(int id,int ownerId, PropertyUpdateDTO dto)
+
+        public async Task<PropertyResponseDTO> UpdateProperty(int id, int ownerId, PropertyUpdateDTO dto)
         {
-            var property = await context.Properties.SingleOrDefaultAsync(p => p.Id == id && p.OwnerId == ownerId);
+            var property = await context.Properties.Include(property => property.PropertyPictures).SingleOrDefaultAsync(p => p.Id == id && p.OwnerId == ownerId);
 
             if (property == null)
             {
                 throw new NotFoundException("Property not found.");
             }
 
-            if(dto.Thumbnail != null) 
+            if (dto.Thumbnail != null)
             {
                 fileService.DeleteFile(property.Thumbnail);
                 var thumbnailName = await fileService.SaveFileAsync(dto.Thumbnail, Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/owner/{ownerId}"));
+                string thumb = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/owner/{ownerId}");
+                Directory.CreateDirectory(thumb);
                 property.Thumbnail = $"/uploads/owner/{ownerId}/{thumbnailName}";
             }
-            if(dto.AggrementOfTerms != null)
+            if (dto.AggrementOfTerms != null)
             {
                 fileService.DeleteFile(property.AggrementOfTerms);
                 var aggrementName = await fileService.SaveFileAsync(dto.AggrementOfTerms, Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/owner/{ownerId}"));
+                string thumb = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/owner/{ownerId}");
+                Directory.CreateDirectory(thumb);
                 property.AggrementOfTerms = $"/uploads/owner/{ownerId}/{aggrementName}";
+            }
+            if (dto.Pictures != null && dto.Pictures.Count > 0)
+            {
+                if (property.PropertyPictures == null)
+                {
+                    property.PropertyPictures = new List<PropertyPicture>();
+                }
+                else
+                {
+                    var existingPictures = await context.PropertyPictureList.Where(pp => pp.PropertyId == id).ToListAsync();
+                    foreach (var pic in existingPictures)
+                    {
+                        fileService.DeleteFile(pic.FilePath);
+                    }
+                    context.PropertyPictureList.RemoveRange(existingPictures);
+                }
+
+                string picUploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/property/{property.Id}");
+                Directory.CreateDirectory(picUploadPath);
+                foreach (var picture in dto.Pictures)
+                {
+                    string pictureName = await fileService.SaveFileAsync(picture, picUploadPath);
+                    string picturePath = $"/uploads/property/{property.Id}/{pictureName}";
+                    property.PropertyPictures.Add(new PropertyPicture
+                    {
+                        FilePath = picturePath
+                    });
+                }
             }
 
             property.BHK = dto.BHK;
@@ -207,11 +263,12 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Bathroom = property.Bathroom,
                 Thumbnail = property.Thumbnail,
                 AggrementOfTerms = property.AggrementOfTerms,
-                OwnerId = property.OwnerId
+                OwnerId = property.OwnerId,
+                Pictures = property.PropertyPictures?.Select(pp => pp.FilePath).ToList()
             };
         }
 
-        public async Task<PropertyResponseDTO> DeleteProperty(int id,int ownerId)
+        public async Task<PropertyResponseDTO> DeleteProperty(int id, int ownerId)
         {
             var property = await context.Properties.SingleOrDefaultAsync(p => p.Id == id && p.OwnerId == ownerId);
             if (property == null)
@@ -221,6 +278,16 @@ namespace HouseRentalBackend.Repos.PropertyRepo
 
             fileService.DeleteFile(property.Thumbnail);
             fileService.DeleteFile(property.AggrementOfTerms);
+
+            if (property.PropertyPictures != null)
+            {
+                foreach (var p in property.PropertyPictures)
+                {
+                    fileService.DeleteFile(p.FilePath);
+                }
+            }
+            if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/property/{property.Id}")))
+                Directory.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"uploads/property/{property.Id}"), true);
 
             context.Properties.Remove(property);
             await context.SaveChangesAsync();

@@ -29,6 +29,8 @@
     {
         public required IFormFile Thumbnail { get; set; }
         public required IFormFile AggrementOfTerms { get; set; }
+
+        public List<IFormFile>? Pictures { get; set; }
     }
     public class PropertyResponseDTO:PropertyDTO
     {
@@ -36,6 +38,7 @@
 
         public required string Thumbnail { get; set; }
         public required string AggrementOfTerms { get; set; }
+        public List<string>? Pictures { get; set; }
         public  int OwnerId { get; set; }
     }
 
@@ -43,5 +46,6 @@
     {
         public IFormFile? Thumbnail { get; set; }
         public IFormFile? AggrementOfTerms { get; set; }
+        public List<IFormFile>? Pictures { get; set; }
     }
 }

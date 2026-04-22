@@ -172,6 +172,24 @@ Download Agreement
 </p>
 <hr>
 
+<h3>Current pictures</h3>
+<div class="scroll-view" *ngIf="property?.pictures">
+<div class="image-view" *ngFor="let picture of property?.pictures">
+  <img [src]="picture" alt="pic"/>
+</div>
+</div>
+<hr/>
+
+<h3>Replace with new pictures</h3>
+<div class="scroll-view">
+    <div class="image-view" *ngFor="let picture of newPictureList; let i = index">
+        <img [src]="picture.preview" alt="pic">
+        <button type="button" class="remove-btn" (click)="removePic(i)">X</button>
+    </div>
+</div>
+<input type="file" (change)="onPictureAdded($event)" multiple>
+
+
 <div class="actions">
 <button type="submit" class="create-btn" (click)="saveChanges()">
 Save Changes
