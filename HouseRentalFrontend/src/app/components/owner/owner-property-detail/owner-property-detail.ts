@@ -3,12 +3,12 @@ import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } 
 import { ActivatedRoute, Router } from '@angular/router';
 import { PropertyResponseDTO } from '../../../../types/propertyTypes';
 import { PropertyService } from '../../../services/property-service';
-import { NgIf } from '@angular/common';
+import { NgIf, NgForOf } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-owner-property-detail',
-  imports: [FormsModule, ReactiveFormsModule, NgIf],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, NgForOf],
   templateUrl: './owner-property-detail.html',
   styleUrl: './owner-property-detail.css',
 })
@@ -32,6 +32,8 @@ export class OwnerPropertyDetail {
     aggrement: new FormControl<File | null>(null)
   });
 
+  newPictureList: { file: File, preview: string }[] = [];
+
   areaTypes: string[] = [
     'Carpet Area',
     'Built-up Area',
@@ -53,10 +55,10 @@ export class OwnerPropertyDetail {
 
     this.propertyService.getPropertyDetails(this.propertyId).subscribe({
       next: (data) => {
-
+        console.log(data);
         data.thumbnail = environment.apiUrl + data.thumbnail;
         data.aggrementOfTerms = environment.apiUrl + data.aggrementOfTerms;
-
+        data.pictures = data.pictures.map((picture: string) => environment.apiUrl + picture);
         this.property = data;
 
         this.updatePropertyForm.patchValue({
@@ -107,6 +109,29 @@ export class OwnerPropertyDetail {
   }
 
 
+
+  onPictureAdded(event: any) {
+    const fileList = event.target.files;
+    let isValid = true;
+    for (const file of fileList) {
+      if (!file.type.startsWith('image/')) {
+        isValid = false;
+        continue;
+      }
+      this.newPictureList.push({ file, preview: URL.createObjectURL(file) });
+    }
+    if (!isValid) {
+      alert("Non image files are removed");
+      event.target.value = '';
+    }
+  }
+
+  removePic(index: number) {
+    this.newPictureList.splice(index, 1);
+  }
+
+
+
   saveChanges() {
 
     if (!this.updatePropertyForm.valid) {
@@ -132,12 +157,17 @@ export class OwnerPropertyDetail {
       formData.append('aggrementOfTerms', this.updatePropertyForm.get('agreement')?.value);
     }
 
+    this.newPictureList.forEach((item) => {
+      formData.append('pictures', item.file);
+    });
+
     this.propertyService.updatePropertyDetails(this.propertyId, formData).subscribe({
       next: (res) => {
         alert("Property updated successfully");
 
         res.thumbnail = environment.apiUrl + res.thumbnail;
         res.aggrementOfTerms = environment.apiUrl + res.aggrementOfTerms;
+        res.pictures = res.pictures.map((picture: string) => environment.apiUrl + picture);
         this.property = res;
         this.cdr.detectChanges();
 

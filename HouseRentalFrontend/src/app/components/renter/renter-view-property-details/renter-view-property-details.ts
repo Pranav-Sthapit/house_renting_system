@@ -3,12 +3,12 @@ import { PropertyResponseDTO } from '../../../../types/propertyTypes';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PropertyService } from '../../../services/property-service';
 import { environment } from '../../../../environments/environment';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { RentalForm } from '../rental-form/rental-form';
 
 @Component({
   selector: 'app-renter-view-property-details',
-  imports: [NgIf,RentalForm],
+  imports: [NgIf,RentalForm,NgFor],
   templateUrl: './renter-view-property-details.html',
   styleUrl: './renter-view-property-details.css',
 })
@@ -39,9 +39,9 @@ export class RenterViewPropertyDetails {
 
         data.thumbnail = environment.apiUrl + data.thumbnail;
         data.aggrementOfTerms = environment.apiUrl + data.aggrementOfTerms;
+        data.pictures = data.pictures.map((picture: string) => environment.apiUrl + picture);
 
         this.property = data;
-
         this.cdr.detectChanges();
 
       },

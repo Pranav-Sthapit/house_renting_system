@@ -38,6 +38,8 @@ namespace HouseRentalBackend.DTO
         public int Bathroom { get; set; }
 
         public required string AggrementOfTerms { get; set; }
+
+        public List<string>? Pictures { get; set; }
     }
 
 

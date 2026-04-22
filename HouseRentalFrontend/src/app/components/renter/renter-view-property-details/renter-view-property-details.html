@@ -79,6 +79,15 @@ Download Agreement
 
 </a>
 
+<hr/>
+<h3>Pictures</h3>
+<div class="scroll-view" *ngIf="property?.pictures">
+<div class="image-view" *ngFor="let picture of property?.pictures">
+  <img [src]="picture" alt="pic"/>
+</div>
+</div>
+<hr/>
+
 <div class="actions">
 <button class="apply-btn" (click)="applyForProperty()">
 Apply for Property

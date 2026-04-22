@@ -76,8 +76,12 @@
         <span class="label">Status</span>
         <span class="status" [ngClass]="rentalWithPropertyDetails.status">{{rentalWithPropertyDetails.status}}</span>
       </div>
-
     </div>
+
+
+
+
+
 
     <!-- Agreement -->
     <div class="agreement-section">
@@ -85,6 +89,14 @@
         Download Agreement
       </a>
     </div>
+
+    <h3>Pictures</h3>
+    <div class="scroll-view" *ngIf="rentalWithPropertyDetails.pictures">
+      <div class="image-view" *ngFor="let picture of rentalWithPropertyDetails.pictures">
+        <img [src]="url + picture" alt="rentalWithPropertyDetails Image">
+      </div>
+    </div>
+
     <div class="actions">
 
       <button class="update-btn" (click)="updateRental()" *ngIf="rentalWithPropertyDetails.status === 'pending'">

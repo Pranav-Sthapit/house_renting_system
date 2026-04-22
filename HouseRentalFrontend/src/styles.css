@@ -391,3 +391,41 @@ textarea:focus {
 html {
   scroll-behavior: smooth;
 }
+
+
+
+
+.scroll-view{
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  gap:5px;
+  padding: 10px 0;
+}
+
+.image-view{
+  flex: 0 0 auto;
+}
+
+.image-view img{
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.remove-btn{
+  position: relative;
+  background-color: rgb(249, 74, 74);
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  bottom: 190px;
+  left:210px;
+  opacity: 0.5;
+}
+
+.remove-btn:hover{
+  opacity: 1;
+}

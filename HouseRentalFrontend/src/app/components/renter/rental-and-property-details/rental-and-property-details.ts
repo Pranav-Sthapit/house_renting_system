@@ -3,12 +3,12 @@ import { RentalResponseForRenterWithDetailsDTO } from '../../../../types/rentalR
 import { ActivatedRoute, Router } from '@angular/router';
 import { RentalService } from '../../../services/rental-service';
 import { environment } from '../../../../environments/environment';
-import { NgIf, NgClass } from '@angular/common';
+import { NgIf, NgClass, NgFor } from '@angular/common';
 import { RentalForm } from "../rental-form/rental-form";
 
 @Component({
   selector: 'app-rental-and-property-details',
-  imports: [NgIf, RentalForm,NgClass],
+  imports: [NgIf, RentalForm,NgClass,NgFor],
   templateUrl: './rental-and-property-details.html',
   styleUrl: './rental-and-property-details.css',
 })
@@ -52,7 +52,7 @@ export class RentalAndPropertyDetails {
         next:(res)=>{
           console.log(res);
           alert('Rental deleted');
-          this.router.navigate(['/renter-home/renter-view-rentals']);
+          this.router.navigate(['/renter-home/view-rentals']);
         },
         error:(err)=>{
           console.log(err);

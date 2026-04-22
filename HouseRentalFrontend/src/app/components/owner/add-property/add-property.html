@@ -132,6 +132,11 @@ Bathrooms
 <hr>
 
 <h3>Upload Property Thumbnail</h3>
+<div class="scroll-view" *ngIf="thumbnailPreview">
+    <div class="image-view">
+        <img [src]="thumbnailPreview" alt="pic">
+    </div>
+</div>
 
 <input type="file" (change)="onThumbnailChange($event)" accept="image/*">
 <p class="error" *ngIf="addPropertyForm.get('thumbnail')?.touched && addPropertyForm.get('thumbnail')?.invalid">
@@ -148,6 +153,15 @@ Bathrooms
 <span *ngIf="addPropertyForm.get('agreement')?.errors?.['invalidFile']">Invalid file format</span>
 </p>
 <hr>
+
+<h3>Upload Pictures</h3>
+<div class="scroll-view">
+    <div class="image-view" *ngFor="let file of fileList; let i = index">
+        <img [src]="file.preview" alt="pic">
+        <button type="button" class="remove-btn" (click)="removePic(i)">X</button>
+    </div>
+</div>
+<input type="file" (change)="onPictureAdded($event)" multiple>
 
 <div class="actions">
 <button type="submit" class="create-btn" (click)="addProperty()">

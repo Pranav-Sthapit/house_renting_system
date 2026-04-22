@@ -39,7 +39,10 @@ namespace HouseRentalBackend.Repos.RentalRepo
             {
                 throw new NotFoundException("Rental details not found");
             }
-            
+
+            var query2="SELECT \"FilePath\" as \"Pictures\" FROM \"PropertyPictureList\" WHERE \"PropertyId\"=@PropertyId";
+            var pics = await connection.QueryAsync<string>(query2, new { PropertyId=propertyId});
+            rentalDetails.Pictures = pics.ToList();
             return rentalDetails;
         }
 

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { PropertyRequestDTO } from '../../../../types/propertyTypes';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { PropertyService } from '../../../services/property-service';
 
 @Component({
   selector: 'app-add-property',
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, NgFor],
   templateUrl: './add-property.html',
   styleUrl: './add-property.css',
 })
@@ -25,10 +25,14 @@ export class AddProperty {
     bathroom: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
     thumbnail: new FormControl<File | null>(null, Validators.required),
     agreement: new FormControl<File | null>(null, Validators.required)
-  })
+  });
+
+  fileList: { file: File, preview: string }[] = [];
 
   constructor(private propertyService: PropertyService) { }
 
+
+  thumbnailPreview: string | null = null;
 
   onThumbnailChange(event: any) {
     const file = event.target.files[0];
@@ -40,6 +44,7 @@ export class AddProperty {
     }
 
     this.addPropertyForm.get('thumbnail')?.setValue(file);
+    this.thumbnailPreview = URL.createObjectURL(file);
   }
 
   onAggrementChange(event: any) {
@@ -53,6 +58,27 @@ export class AddProperty {
 
     this.addPropertyForm.get('agreement')?.setValue(file);
   }
+
+  onPictureAdded(event: any) {
+    const fileList = event.target.files;
+    let isValid = true;
+    for (const file of fileList) {
+      if (!file.type.startsWith('image/')) {
+        isValid = false;
+        continue;
+      }
+      this.fileList.push({ file, preview: URL.createObjectURL(file) });
+    }
+    if (!isValid) {
+      alert("Non image files are removed");
+      event.target.value = '';
+    }
+  }
+
+  removePic(index: number) {
+    this.fileList.splice(index, 1);
+  }
+
 
   addProperty() {
     if (!this.addPropertyForm.valid) {
@@ -74,6 +100,10 @@ export class AddProperty {
     formData.append('thumbnail', this.addPropertyForm.get('thumbnail')?.value);
     formData.append('aggrementOfTerms', this.addPropertyForm.get('agreement')?.value);
 
+    this.fileList.forEach((item) => {
+      formData.append('pictures', item.file);
+    });
+
     this.propertyService.addProperty(formData).subscribe({
       next: (res) => {
         alert("Property added successfully");
@@ -85,6 +115,8 @@ export class AddProperty {
       }
     })
   }
+
+
 
 
 }

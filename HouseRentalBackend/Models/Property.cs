@@ -33,5 +33,7 @@
         public required Owner Owner{  get; set; }
 
         public List<Rental>? Rentals { get; set; }
+
+        public List<PropertyPicture>? PropertyPictures { get; set; }
     }
 }
