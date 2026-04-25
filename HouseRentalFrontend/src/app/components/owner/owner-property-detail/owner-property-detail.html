@@ -190,6 +190,13 @@ Download Agreement
 <input type="file" (change)="onPictureAdded($event)" multiple>
 
 
+<h3>Set Location</h3>
+<app-map [propertyLat]="property?.latitude ?? null" [propertyLng]="property?.longitude ?? null" (selectedLatLng)="setLatLang($event)"></app-map>
+<p class="error" *ngIf="updatePropertyForm.get('latitude')?.touched && updatePropertyForm.get('latitude')?.invalid">
+    <span *ngIf="updatePropertyForm.get('latitude')?.errors?.['required']">Location is required</span>
+</p>
+
+
 <div class="actions">
 <button type="submit" class="create-btn" (click)="saveChanges()">
 Save Changes

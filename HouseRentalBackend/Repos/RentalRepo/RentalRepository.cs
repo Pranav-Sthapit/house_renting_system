@@ -32,7 +32,7 @@ namespace HouseRentalBackend.Repos.RentalRepo
 
         public async Task<RentalResponseDTOForRenterWithDetails> GetRentalDetailsForRenter(int renterId, int propertyId)
         {
-            var query = "Select P.\"Id\" as \"PropertyId\" ,P.\"BHK\",P.\"Size\",P.\"Floor\",P.\"AreaType\",P.\"Locality\",P.\"City\",P.\"FurnishingStatus\",P.\"Tenant\",R.\"Tenant\" as \"ProposedTenant\",P.\"Bathroom\",P.\"Rent\",R.\"Rent\" as \"ProposedRent\",P.\"AggrementOfTerms\",P.\"Thumbnail\",R.\"Status\" from \"Rentals\" as R JOIN \"Properties\" P On R.\"PropertyId\"=P.\"Id\" Where R.\"RenterId\"=@RenterId and P.\"Id\"=@PropertyId;";
+            var query = "Select P.\"Id\" as \"PropertyId\" ,P.\"BHK\",P.\"Size\",P.\"Floor\",P.\"AreaType\",P.\"Locality\",P.\"City\",P.\"FurnishingStatus\",P.\"Tenant\",R.\"Tenant\" as \"ProposedTenant\",P.\"Bathroom\",P.\"Rent\",R.\"Rent\" as \"ProposedRent\",P.\"AggrementOfTerms\",P.\"Thumbnail\",P.\"Latitude\",P.\"Longitude\",R.\"Status\" from \"Rentals\" as R JOIN \"Properties\" P On R.\"PropertyId\"=P.\"Id\" Where R.\"RenterId\"=@RenterId and P.\"Id\"=@PropertyId;";
             using var connection = context.CreateConnection();
             var rentalDetails = await connection.QueryFirstOrDefaultAsync<RentalResponseDTOForRenterWithDetails>(query, new { RenterId = renterId, PropertyId = propertyId });
             if (rentalDetails == null)

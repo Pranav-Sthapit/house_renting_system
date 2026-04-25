@@ -1,0 +1,15 @@
+<div class="map-wrapper">
+
+  <button class="locate-btn" (click)="locateUser()">
+    📍 My Location
+  </button>
+
+  <button class="route-btn" (click)="showRoute()">
+    Show Route
+  </button>
+
+  <p class="distance-label" *ngIf="(distance>0)">Distance: {{ distance | number:'1.2-2'}} km</p>
+
+  <div id="map" class="map-box"></div>
+
+</div>

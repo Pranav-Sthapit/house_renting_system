@@ -5,10 +5,11 @@ import { PropertyService } from '../../../services/property-service';
 import { environment } from '../../../../environments/environment';
 import { NgFor, NgIf } from '@angular/common';
 import { RentalForm } from '../rental-form/rental-form';
+import { Map } from '../../map/map';
 
 @Component({
   selector: 'app-renter-view-property-details',
-  imports: [NgIf,RentalForm,NgFor],
+  imports: [NgIf, RentalForm, NgFor, Map],
   templateUrl: './renter-view-property-details.html',
   styleUrl: './renter-view-property-details.css',
 })
@@ -16,7 +17,7 @@ export class RenterViewPropertyDetails {
   propertyId!: number;
 
   showRentalForm: boolean = false;
-  type:string="apply";  
+  type: string = "apply";
 
   property: PropertyResponseDTO | null = null;
 
@@ -36,7 +37,6 @@ export class RenterViewPropertyDetails {
 
     this.propertyService.getPropertyDetails(this.propertyId).subscribe({
       next: (data) => {
-
         data.thumbnail = environment.apiUrl + data.thumbnail;
         data.aggrementOfTerms = environment.apiUrl + data.aggrementOfTerms;
         data.pictures = data.pictures.map((picture: string) => environment.apiUrl + picture);
@@ -51,13 +51,13 @@ export class RenterViewPropertyDetails {
     });
   }
 
-  applyForProperty(){
-      this.showRentalForm=true;
-      this.type="apply";
+  applyForProperty() {
+    this.showRentalForm = true;
+    this.type = "apply";
   }
 
-  closeRentalForm(){
-    this.showRentalForm=false;
+  closeRentalForm() {
+    this.showRentalForm = false;
   }
 
 

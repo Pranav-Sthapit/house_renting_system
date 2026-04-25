@@ -88,6 +88,10 @@ Download Agreement
 </div>
 <hr/>
 
+<h3>Location</h3>
+<app-map [propertyLat]="property?.latitude ?? null" [propertyLng]="property?.longitude ?? null"></app-map>
+
+
 <div class="actions">
 <button class="apply-btn" (click)="applyForProperty()">
 Apply for Property

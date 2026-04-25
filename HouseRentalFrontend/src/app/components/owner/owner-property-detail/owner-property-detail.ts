@@ -5,10 +5,11 @@ import { PropertyResponseDTO } from '../../../../types/propertyTypes';
 import { PropertyService } from '../../../services/property-service';
 import { NgIf, NgForOf } from '@angular/common';
 import { environment } from '../../../../environments/environment';
+import { Map } from '../../map/map';
 
 @Component({
   selector: 'app-owner-property-detail',
-  imports: [FormsModule, ReactiveFormsModule, NgIf, NgForOf],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, NgForOf, Map],
   templateUrl: './owner-property-detail.html',
   styleUrl: './owner-property-detail.css',
 })
@@ -29,7 +30,9 @@ export class OwnerPropertyDetail {
     tenant: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]),
     bathroom: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
     thumbnail: new FormControl<File | null>(null),
-    aggrement: new FormControl<File | null>(null)
+    aggrement: new FormControl<File | null>(null),
+    latitude: new FormControl<number | null>(null, Validators.required),
+    longitude: new FormControl<number | null>(null, Validators.required)
   });
 
   newPictureList: { file: File, preview: string }[] = [];
@@ -71,7 +74,9 @@ export class OwnerPropertyDetail {
           city: data.city,
           furnishingStatus: data.furnishingStatus,
           tenant: data.tenant,
-          bathroom: data.bathroom
+          bathroom: data.bathroom,
+          latitude: data.latitude,
+          longitude: data.longitude
         });
 
         this.cdr.detectChanges();
@@ -130,6 +135,17 @@ export class OwnerPropertyDetail {
     this.newPictureList.splice(index, 1);
   }
 
+  setLatLang(latlng: { lat: number, lng: number } | null) {
+    if (latlng) {
+      this.updatePropertyForm.get('latitude')?.setValue(latlng.lat);
+      this.updatePropertyForm.get('longitude')?.setValue(latlng.lng);
+      this.updatePropertyForm.get('latitude')?.setErrors(null);
+      this.updatePropertyForm.get('longitude')?.setErrors(null);
+    } else {
+      this.updatePropertyForm.get('latitude')?.setErrors({ required: true });
+      this.updatePropertyForm.get('longitude')?.setErrors({ required: true });
+    }
+  }
 
 
   saveChanges() {
@@ -150,6 +166,10 @@ export class OwnerPropertyDetail {
     formData.append('furnishingStatus', this.updatePropertyForm.get('furnishingStatus')?.value);
     formData.append('tenant', this.updatePropertyForm.get('tenant')?.value);
     formData.append('bathroom', this.updatePropertyForm.get('bathroom')?.value);
+
+    formData.append('latitude', this.updatePropertyForm.get('latitude')?.value.toString());
+    formData.append('longitude', this.updatePropertyForm.get('longitude')?.value.toString());
+
     if (this.updatePropertyForm.get('thumbnail')?.value) {
       formData.append('thumbnail', this.updatePropertyForm.get('thumbnail')?.value);
     }

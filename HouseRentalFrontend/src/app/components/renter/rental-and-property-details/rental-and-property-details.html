@@ -97,6 +97,9 @@
       </div>
     </div>
 
+    <h3>Location</h3>
+    <app-map [propertyLat]="rentalWithPropertyDetails.latitude" [propertyLng]="rentalWithPropertyDetails.longitude"></app-map>
+
     <div class="actions">
 
       <button class="update-btn" (click)="updateRental()" *ngIf="rentalWithPropertyDetails.status === 'pending'">

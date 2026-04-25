@@ -162,6 +162,13 @@ Bathrooms
     </div>
 </div>
 <input type="file" (change)="onPictureAdded($event)" multiple>
+<hr/>
+
+<h3>Set Location</h3>
+<app-map (selectedLatLng)="setLatLang($event)"></app-map>
+<p class="error" *ngIf="addPropertyForm.get('latitude')?.touched && addPropertyForm.get('latitude')?.invalid">
+    <span *ngIf="addPropertyForm.get('latitude')?.errors?.['required']">Location is required</span>
+</p>
 
 <div class="actions">
 <button type="submit" class="create-btn" (click)="addProperty()">

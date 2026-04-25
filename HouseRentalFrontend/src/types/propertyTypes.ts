@@ -9,6 +9,8 @@ export type PropertyDTO = {
     furnishingStatus: string;
     tenant: string;
     bathroom: number;
+    latitude: number;
+    longitude: number;
 }
 
 export type PropertyRequestDTO = PropertyDTO & {

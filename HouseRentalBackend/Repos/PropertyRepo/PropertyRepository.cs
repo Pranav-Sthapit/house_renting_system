@@ -36,6 +36,8 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Bathroom = p.Bathroom,
                 Thumbnail = p.Thumbnail,
                 AggrementOfTerms = p.AggrementOfTerms,
+                Latitude = p.Latitude,
+                Longitude= p.Longitude,
                 OwnerId = p.OwnerId
             }).ToListAsync();
 
@@ -59,6 +61,8 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Bathroom = p.Bathroom,
                 Thumbnail = p.Thumbnail,
                 AggrementOfTerms = p.AggrementOfTerms,
+                Latitude = p.Latitude,
+                Longitude = p.Longitude,
                 OwnerId = p.OwnerId
             }).ToListAsync();
 
@@ -86,6 +90,8 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Bathroom = property.Bathroom,
                 Thumbnail = property.Thumbnail,
                 AggrementOfTerms = property.AggrementOfTerms,
+                Latitude = property.Latitude,
+                Longitude = property.Longitude,
                 OwnerId = property.OwnerId,
                 Pictures = property.PropertyPictures?.Select(pp => pp.FilePath).ToList()
             };
@@ -130,6 +136,8 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Bathroom = dto.Bathroom,
                 AggrementOfTerms = aggrementPath,
                 Thumbnail = thumbnailPath,
+                Latitude = dto.Latitude,
+                Longitude = dto.Longitude,
                 OwnerId = ownerId,
                 Owner = owner
             };
@@ -173,6 +181,8 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Bathroom = property.Bathroom,
                 Thumbnail = property.Thumbnail,
                 AggrementOfTerms = property.AggrementOfTerms,
+                Latitude = dto.Latitude,
+                Longitude = dto.Longitude,
                 OwnerId = property.OwnerId,
                 Pictures = property.PropertyPictures?.Select(pp => pp.FilePath).ToList()
             };
@@ -244,6 +254,8 @@ namespace HouseRentalBackend.Repos.PropertyRepo
             property.FurnishingStatus = dto.FurnishingStatus;
             property.Tenant = dto.Tenant;
             property.Bathroom = dto.Bathroom;
+            property.Latitude = dto.Latitude;
+            property.Longitude = dto.Longitude;
 
             context.Properties.Update(property);
             await context.SaveChangesAsync();
@@ -263,6 +275,8 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Bathroom = property.Bathroom,
                 Thumbnail = property.Thumbnail,
                 AggrementOfTerms = property.AggrementOfTerms,
+                Latitude = property.Latitude,
+                Longitude = property.Longitude,
                 OwnerId = property.OwnerId,
                 Pictures = property.PropertyPictures?.Select(pp => pp.FilePath).ToList()
             };
@@ -307,6 +321,8 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Bathroom = property.Bathroom,
                 Thumbnail = property.Thumbnail,
                 AggrementOfTerms = property.AggrementOfTerms,
+                Latitude = property.Latitude,
+                Longitude = property.Longitude,
                 OwnerId = property.OwnerId
             };
 

@@ -3,10 +3,11 @@ import { PropertyRequestDTO } from '../../../../types/propertyTypes';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { PropertyService } from '../../../services/property-service';
+import { Map } from '../../map/map';
 
 @Component({
   selector: 'app-add-property',
-  imports: [ReactiveFormsModule, NgIf, NgFor],
+  imports: [ReactiveFormsModule, NgIf, NgFor, Map],
   templateUrl: './add-property.html',
   styleUrl: './add-property.css',
 })
@@ -24,10 +25,13 @@ export class AddProperty {
     tenant: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]),
     bathroom: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
     thumbnail: new FormControl<File | null>(null, Validators.required),
-    agreement: new FormControl<File | null>(null, Validators.required)
+    agreement: new FormControl<File | null>(null, Validators.required),
+    latitude: new FormControl<number | null>(null, Validators.required),
+    longitude: new FormControl<number | null>(null, Validators.required)
   });
 
   fileList: { file: File, preview: string }[] = [];
+
 
   constructor(private propertyService: PropertyService) { }
 
@@ -79,6 +83,18 @@ export class AddProperty {
     this.fileList.splice(index, 1);
   }
 
+  setLatLang(latlng:{lat:number,lng:number}|null){
+    if(latlng){
+      this.addPropertyForm.get('latitude')?.setValue(latlng.lat);
+      this.addPropertyForm.get('longitude')?.setValue(latlng.lng);
+      this.addPropertyForm.get('latitude')?.setErrors(null);
+      this.addPropertyForm.get('longitude')?.setErrors(null);
+    }else{
+      this.addPropertyForm.get('latitude')?.setErrors({required:true});
+      this.addPropertyForm.get('longitude')?.setErrors({required:true});
+    }
+  }
+
 
   addProperty() {
     if (!this.addPropertyForm.valid) {
@@ -103,6 +119,13 @@ export class AddProperty {
     this.fileList.forEach((item) => {
       formData.append('pictures', item.file);
     });
+
+    formData.append('latitude', this.addPropertyForm.get('latitude')?.value.toString());
+    formData.append('longitude', this.addPropertyForm.get('longitude')?.value.toString());
+
+    formData.forEach((value,key)=>{
+      console.log(key,value);
+    })
 
     this.propertyService.addProperty(formData).subscribe({
       next: (res) => {

@@ -15,11 +15,13 @@ import { RenterViewProperty } from './components/renter/renter-view-property/ren
 import { RenterViewPropertyDetails } from './components/renter/renter-view-property-details/renter-view-property-details';
 import { RentalAndPropertyDetails } from './components/renter/rental-and-property-details/rental-and-property-details';
 import { LandingPage } from './components/landing-page/landing-page';
+import {Map} from './components/map/map';
 
 export const routes: Routes = [
     { path: "", component: LandingPage },
     { path: 'register', component: Register },
     { path: 'login', component: Login },
+    {path:'map',component:Map},
     {
         path: 'owner-home', component: OwnerHome,
         children: [
