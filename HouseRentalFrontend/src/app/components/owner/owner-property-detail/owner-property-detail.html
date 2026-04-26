@@ -37,10 +37,11 @@ Size (sq ft)
 
 <label>
 Floor
-<input type="text" formControlName="floor" placeholder="Example: 2 of 5">
+<input type="text" formControlName="floor" placeholder="Example: 2 out of 5">
 
 <p class="error" *ngIf="updatePropertyForm.get('floor')?.touched && updatePropertyForm.get('floor')?.invalid">
-Floor is required
+<span *ngIf="updatePropertyForm.get('floor')?.errors?.['required']">Floor is required</span>
+<span *ngIf="updatePropertyForm.get('floor')?.errors?.['pattern']">Must be format (X out of X)</span>
 </p>
 
 </label>
@@ -51,9 +52,8 @@ Area Type
 
 <option value="">Select Area Type</option>
 <option value="Carpet Area">Carpet Area</option>
-<option value="Built-up Area">Built-up Area</option>
-<option value="Super Built-up Area">Super Built-up Area</option>
-
+<option value="Built Area">Built Area</option>
+<option value="Super Area">Super Area</option>
 </select>
 
 <p class="error" *ngIf="updatePropertyForm.get('areaType')?.touched && updatePropertyForm.get('areaType')?.invalid">
@@ -90,8 +90,8 @@ Furnishing Status
 
 <option value="">Select Furnishing</option>
 <option value="Unfurnished">Unfurnished</option>
-<option value="Semi Furnished">Semi Furnished</option>
-<option value="Fully Furnished">Fully Furnished</option>
+<option value="Semi-Furnished">Semi-Furnished</option>
+<option value="Furnished">Furnished</option>
 
 </select>
 
@@ -103,11 +103,15 @@ Furnishing status is required
 
 <label>
 Tenant
-<input type="text" formControlName="tenant" placeholder="Enter Preferred Tenant">
+<select formControlName="tenant">
+<option value="">Select Tenant</option>
+<option value="Bachelors">Bachelors</option>
+<option value="Bachelors/Family">Bachelors/Family</option>
+<option value="Family">Family</option>
+</select>
 
 <p class="error" *ngIf="updatePropertyForm.get('tenant')?.touched && updatePropertyForm.get('tenant')?.invalid">
-<span *ngIf="updatePropertyForm.get('tenant')?.errors?.['required']">Tenant is required</span>
-<span *ngIf="updatePropertyForm.get('tenant')?.errors?.['pattern']">Only letters allowed</span>
+Tenant is required
 </p>
 
 </label>

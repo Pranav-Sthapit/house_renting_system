@@ -27,6 +27,15 @@ namespace HouseRentalBackend.Controllers
             return Ok(properties);
         }
 
+        [Authorize(Roles = "renter")]
+        [HttpPost("filtered-properties")]
+        public async Task<IActionResult> GetFilteredProperties([FromBody] ClusterRequestDTO dto)
+        {
+            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(dto));
+            var properties = await propertyRepository.GetFilteredProperties(dto);
+            return Ok(properties);
+        }
+
         [Authorize(Roles = "owner")]
         [HttpGet("owner")]
         public async Task<IActionResult> GetOwnerProperties()

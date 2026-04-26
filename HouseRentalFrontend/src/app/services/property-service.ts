@@ -61,4 +61,12 @@ export class PropertyService {
     return this.http.get(`${this.baseUrl}/Property/renter`, { headers });
   }
 
+  getFilteredProperties(data:any):Observable<any>{
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.post(`${this.baseUrl}/Property/filtered-properties`, data, { headers });
+  }
+
 }

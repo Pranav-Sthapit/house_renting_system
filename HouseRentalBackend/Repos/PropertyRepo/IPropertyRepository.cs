@@ -6,6 +6,8 @@ namespace HouseRentalBackend.Repos.PropertyRepo
     public interface IPropertyRepository
     {
         Task<List<PropertyResponseDTO>> GetAllProperties();
+
+        Task<List<PropertyResponseDTO>> GetFilteredProperties(ClusterRequestDTO dto);
         Task<List<PropertyResponseDTO>> GetOwnerProperties(int ownerId);
 
         Task<PropertyResponseDTO> GetProperty(int propertyId);

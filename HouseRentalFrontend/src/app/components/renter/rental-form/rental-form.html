@@ -12,8 +12,13 @@
             </div>
 
             <div class="form-group">
-                <label>Tenant Type (married/single/etc) </label>
-                <input type="text" name="tenant" placeholder="Enter Tenant Type" [(ngModel)]="tenant">
+                <label>Tenant Type</label>
+                <select name="tenant" [(ngModel)]="tenant">
+                    <option value="">Select Tenant</option>
+                    <option value="Bachelors">Bachelors</option>
+                    <option value="Bachelors/Family">Bachelors/Family</option>
+                    <option value="Family">Family</option>
+                </select>
             </div>
 
             <div class="buttons">

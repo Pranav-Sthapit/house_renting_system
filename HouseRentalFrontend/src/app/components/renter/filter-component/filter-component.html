@@ -1,0 +1,12 @@
+<div class="filter-container">
+    <h3>Filters</h3>
+    <div class="filter-scroll">
+        <div class="filter-item" *ngFor="let filter of filters">
+            <select [(ngModel)]="filter.value" [class.active]="filter.value">
+                <option value="">Select {{filter.name}}</option>
+                <option *ngFor="let option of filter.options" [value]="option.value">{{option.label}}</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn btn-primary" (click)="filterData()">Filter</button>
+</div>

@@ -32,6 +32,8 @@
 
         public required double Longitude { get; set; }
 
+        public required int Cluster { get; set; }
+
         public int OwnerId { get; set; }   
 
         public required Owner Owner{  get; set; }

@@ -22,12 +22,12 @@ export class OwnerPropertyDetail {
     bhk: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9]/)]),
     rent: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
     size: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
-    floor: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z0-9 ]+$/)]),
+    floor: new FormControl("", [Validators.required, Validators.pattern(/^(?:\d+|Ground|Basement)\s+out\s+of\s+\d+$/)]),
     areaType: new FormControl("", Validators.required),
     locality: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]),
     city: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]),
     furnishingStatus: new FormControl("", Validators.required),
-    tenant: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]),
+    tenant: new FormControl("", Validators.required),
     bathroom: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
     thumbnail: new FormControl<File | null>(null),
     aggrement: new FormControl<File | null>(null),
@@ -36,12 +36,6 @@ export class OwnerPropertyDetail {
   });
 
   newPictureList: { file: File, preview: string }[] = [];
-
-  areaTypes: string[] = [
-    'Carpet Area',
-    'Built-up Area',
-    'Super Built-up Area'
-  ];
 
   constructor(private route: ActivatedRoute,
     private router: Router,

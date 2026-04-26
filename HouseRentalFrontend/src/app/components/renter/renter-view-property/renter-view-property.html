@@ -2,6 +2,8 @@
   <h2>Available Properties</h2>
 </div>
 
+<app-filter-component (filteredProperties)="loadFilteredProperties($event)"></app-filter-component>
+
 <div class="property-grid">
   <div class="property-card" *ngFor="let p of properties">
 

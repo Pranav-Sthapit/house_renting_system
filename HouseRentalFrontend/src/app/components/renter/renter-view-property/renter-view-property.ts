@@ -4,10 +4,11 @@ import { PropertyResponseDTO } from '../../../../types/propertyTypes';
 import { PropertyService } from '../../../services/property-service';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { FilterComponent } from '../filter-component/filter-component';
 
 @Component({
   selector: 'app-renter-view-property',
-  imports: [NgFor,RouterLink],
+  imports: [NgFor,RouterLink,FilterComponent],
   templateUrl: './renter-view-property.html',
   styleUrl: './renter-view-property.css',
 })
@@ -36,4 +37,10 @@ export class RenterViewProperty {
       }
     })
   }
+
+  loadFilteredProperties(filteredProperties:PropertyResponseDTO[]){
+    this.properties=[...filteredProperties];
+    this.cdr.detectChanges();
+  }
+
 }

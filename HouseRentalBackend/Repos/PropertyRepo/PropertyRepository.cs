@@ -12,11 +12,13 @@ namespace HouseRentalBackend.Repos.PropertyRepo
     {
         private readonly ApplicationDbContext context;
         private readonly IFileService fileService;
+        private readonly IFlaskService flaskService;
 
-        public PropertyRepository(ApplicationDbContext context, IFileService fileService)
+        public PropertyRepository(ApplicationDbContext context, IFileService fileService, IFlaskService flaskService)
         {
             this.context = context;
             this.fileService = fileService;
+            this.flaskService = flaskService;
         }
 
         public async Task<List<PropertyResponseDTO>> GetAllProperties()
@@ -42,6 +44,50 @@ namespace HouseRentalBackend.Repos.PropertyRepo
             }).ToListAsync();
 
             return properties;
+        }
+
+        public async Task<List<PropertyResponseDTO>> GetFilteredProperties(ClusterRequestDTO dto)
+        {
+            var clusterRequest =new ClusterRequestDTO
+            {
+                BHK = dto.BHK,
+                Rent = dto.Rent,
+                Size = dto.Size,
+                Floor = dto.Floor,
+                Area_Type = dto.Area_Type,
+                Furnishing_Status = dto.Furnishing_Status,
+                Tenant_Preferred = dto.Tenant_Preferred
+            };
+            
+
+            var clusterResponse = await flaskService.GetCluster(clusterRequest);
+
+            var properties = await context.Properties.Where(p => p.Cluster == clusterResponse.Cluster).Select(p => new PropertyResponseDTO
+            {
+                Id = p.Id,
+                BHK = p.BHK,
+                Rent = p.Rent,
+                Size = p.Size,
+                Floor = p.Floor,
+                AreaType = p.AreaType,
+                Locality = p.Locality,
+                City = p.City,
+                FurnishingStatus = p.FurnishingStatus,
+                Tenant = p.Tenant,
+                Bathroom = p.Bathroom,
+                Thumbnail = p.Thumbnail,
+                AggrementOfTerms = p.AggrementOfTerms,
+                Latitude = p.Latitude,
+                Longitude = p.Longitude,
+                OwnerId = p.OwnerId
+            }).ToListAsync();
+
+            if(properties.Count == 0)
+            {
+                throw new NotFoundException("No properties found matching the criteria.");
+            }
+            return properties;
+
         }
 
         public async Task<List<PropertyResponseDTO>> GetOwnerProperties(int ownerId)
@@ -121,6 +167,18 @@ namespace HouseRentalBackend.Repos.PropertyRepo
             string aggrementName = await fileService.SaveFileAsync(aggrementFile, uploadPath);
             string aggrementPath = $"/uploads/owner/{ownerId}/{aggrementName}";
 
+            var clusterRequest = new ClusterRequestDTO
+            {
+                BHK = dto.BHK,
+                Rent = dto.Rent,
+                Size = dto.Size,
+                Floor = dto.Floor,
+                Area_Type = dto.AreaType,
+                Furnishing_Status = dto.FurnishingStatus,
+                Tenant_Preferred = dto.Tenant
+            };
+
+            var clusterResponse = await flaskService.GetCluster(clusterRequest);
 
             Property property = new Property
             {
@@ -138,6 +196,7 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 Thumbnail = thumbnailPath,
                 Latitude = dto.Latitude,
                 Longitude = dto.Longitude,
+                Cluster = clusterResponse.Cluster,
                 OwnerId = ownerId,
                 Owner = owner
             };
@@ -244,6 +303,19 @@ namespace HouseRentalBackend.Repos.PropertyRepo
                 }
             }
 
+            var clusterRequest = new ClusterRequestDTO
+            {
+                BHK = dto.BHK,
+                Rent = dto.Rent,
+                Size = dto.Size,
+                Floor = dto.Floor,
+                Area_Type = dto.AreaType,
+                Furnishing_Status = dto.FurnishingStatus,
+                Tenant_Preferred = dto.Tenant
+            };
+
+            var clusterResponse = await flaskService.GetCluster(clusterRequest);
+
             property.BHK = dto.BHK;
             property.Size = dto.Size;
             property.Rent = dto.Rent;
@@ -256,6 +328,7 @@ namespace HouseRentalBackend.Repos.PropertyRepo
             property.Bathroom = dto.Bathroom;
             property.Latitude = dto.Latitude;
             property.Longitude = dto.Longitude;
+            property.Cluster = clusterResponse.Cluster;
 
             context.Properties.Update(property);
             await context.SaveChangesAsync();
