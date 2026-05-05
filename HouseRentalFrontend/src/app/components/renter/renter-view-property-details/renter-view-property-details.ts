@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { NgFor, NgIf } from '@angular/common';
 import { RentalForm } from '../rental-form/rental-form';
 import { Map } from '../../map/map';
+import { BehaviourService } from '../../../services/behaviour-service';
 
 @Component({
   selector: 'app-renter-view-property-details',
@@ -24,7 +25,8 @@ export class RenterViewPropertyDetails {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private propertyService: PropertyService,
-    private cdr: ChangeDetectorRef) { }
+    private cdr: ChangeDetectorRef,
+    private behaviourService: BehaviourService) { }
 
 
   ngOnInit(): void {
@@ -34,6 +36,15 @@ export class RenterViewPropertyDetails {
       alert('error occured while viewing property detail');
       this.router.navigate(['/owner-home']);
     }
+
+    this.behaviourService.incrementViewCount(this.propertyId).subscribe({
+      next: (data) => {
+        console.log("view count incremented");
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
 
     this.propertyService.getPropertyDetails(this.propertyId).subscribe({
       next: (data) => {

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using HouseRentalBackend.Repos.RentalRepo;
 using HouseRentalBackend.Controllers;
+using HouseRentalBackend.Repos.BehaviourRepo;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
 builder.Services.AddScoped<IRenterRepository, RenterRepository>();
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IRentalRepository, RentalRepository>();
+builder.Services.AddScoped<IBehaviourRepository, BehaviourRepository>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 

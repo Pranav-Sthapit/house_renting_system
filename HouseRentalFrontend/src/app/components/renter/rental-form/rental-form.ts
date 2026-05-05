@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RentalService } from '../../../services/rental-service';
 import { Router } from '@angular/router';
+import { BehaviourService } from '../../../services/behaviour-service';
 
 @Component({
   selector: 'app-rental-form',
@@ -16,7 +17,9 @@ export class RentalForm {
   tenant = ''
   rent = 0
 
-  constructor(private rentalService: RentalService,private router:Router) { }
+  constructor(private rentalService: RentalService,
+    private behaviourService: BehaviourService,
+    private router:Router) { }
 
   apply() {
     console.log(this.tenant);
@@ -34,6 +37,7 @@ export class RentalForm {
 
 
     if (this.type == "apply") {
+
       this.rentalService.addRental(this.propertyId, this.tenant, this.rent).subscribe({
         next: (res) => {
           console.log(res);
@@ -46,6 +50,17 @@ export class RentalForm {
           alert('failed to apply for rental');
         }
       })
+
+      this.behaviourService.applyForProperty(this.propertyId).subscribe({
+        next: (res) => {
+          console.log("applied");
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+
+
     }
 
     if (this.type == "update") {

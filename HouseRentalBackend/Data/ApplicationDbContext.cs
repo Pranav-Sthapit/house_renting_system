@@ -17,12 +17,15 @@ namespace HouseRentalBackend.Data
 
         public DbSet<PropertyPicture> PropertyPictureList { get; set; }
 
+        public DbSet<RenterBehaviourWithProperty> RenterBehaviourWithProperties { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>().HasIndex(p => p.Email).IsUnique();
             modelBuilder.Entity<Person>().HasIndex(p => p.Username).IsUnique();
             modelBuilder.Entity<Person>().HasIndex(p => p.Contact).IsUnique();
             modelBuilder.Entity<Rental>().HasKey(r => new { r.RenterId, r.PropertyId });
+            modelBuilder.Entity<RenterBehaviourWithProperty>().HasKey(rb => new { rb.RenterId, rb.PropertyId });
 
             modelBuilder.Entity<Renter>().HasOne(r => r.RenterInfo).WithOne(ri => ri.Renter).HasForeignKey<RenterInfo>(ri => ri.RenterId);
             modelBuilder.Entity<Owner>().HasMany(o => o.Properties).WithOne(p => p.Owner).HasForeignKey(p => p.OwnerId);
@@ -30,6 +33,9 @@ namespace HouseRentalBackend.Data
 
             modelBuilder.Entity<Rental>().HasOne(rl => rl.Renter).WithMany(r => r.Rentals).HasForeignKey(rl=>rl.RenterId);
             modelBuilder.Entity<Rental>().HasOne(rl => rl.Property).WithMany(p => p.Rentals).HasForeignKey(rl => rl.PropertyId);
+
+            modelBuilder.Entity<RenterBehaviourWithProperty>().HasOne(rb => rb.Renter).WithMany(r => r.RenterBehaviours).HasForeignKey(rb => rb.RenterId);
+            modelBuilder.Entity<RenterBehaviourWithProperty>().HasOne(rb => rb.Property).WithMany(p => p.RenterBehaviours).HasForeignKey(rb => rb.PropertyId);
         }
     }
 }

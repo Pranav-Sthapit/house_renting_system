@@ -1,4 +1,5 @@
 ﻿using HouseRentalBackend.DTO;
+using HouseRentalBackend.Repos.BehaviourRepo;
 using HouseRentalBackend.Repos.PropertyRepo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,7 +13,7 @@ namespace HouseRentalBackend.Controllers
     public class PropertyController : ControllerBase
     {
         private readonly IPropertyRepository propertyRepository;
-        public PropertyController(IPropertyRepository propertyRepository)
+        public PropertyController(IPropertyRepository propertyRepository,IBehaviourRepository behaviourRepository)
         {
             this.propertyRepository = propertyRepository;
         }

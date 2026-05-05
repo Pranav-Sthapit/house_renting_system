@@ -1,4 +1,5 @@
 ﻿using HouseRentalBackend.DTO;
+using HouseRentalBackend.Repos.BehaviourRepo;
 using HouseRentalBackend.Repos.RentalRepo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +14,6 @@ namespace HouseRentalBackend.Controllers
     public class RentalController : ControllerBase
     {
         private readonly IRentalRepository rentalRepository;
-
         public RentalController(IRentalRepository rentalRepository)
         {
             this.rentalRepository = rentalRepository;
@@ -79,7 +79,6 @@ namespace HouseRentalBackend.Controllers
 
             if (!int.TryParse(userId, out int renterId))
                 return BadRequest("Invalid UserId format in token");
-
 
             var rentalDetails = await rentalRepository.AddRentalByRenter(renterId, propertyId, dto);
             return Ok(rentalDetails);

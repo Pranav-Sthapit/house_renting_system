@@ -41,5 +41,7 @@
         public List<Rental>? Rentals { get; set; }
 
         public List<PropertyPicture>? PropertyPictures { get; set; }
+
+        public List<RenterBehaviourWithProperty>? RenterBehaviours { get; set; }
     }
 }

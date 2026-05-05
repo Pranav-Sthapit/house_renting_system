@@ -7,5 +7,7 @@ namespace HouseRentalBackend.Models
         public RenterInfo? RenterInfo { get; set; }
 
         public List<Rental>? Rentals { get; set; }
+
+        public List<RenterBehaviourWithProperty>? RenterBehaviours { get; set; }
     }
 }

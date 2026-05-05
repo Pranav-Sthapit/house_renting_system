@@ -3,7 +3,6 @@ using HouseRentalBackend.DTO;
 using HouseRentalBackend.Exceptions;
 using HouseRentalBackend.Models;
 using Microsoft.EntityFrameworkCore;
-using HouseRentalBackend.Exceptions;
 
 namespace HouseRentalBackend.Repos
 {
